@@ -128,8 +128,11 @@ textarea {
 }
 
 /* Apple-style coarse-pointer ergonomics: preserve compact desktop density,
-   but give touch users a 44px physical target without enlarging the icon. */
-@media (max-width: 47.999rem), (hover: none), (pointer: coarse), (any-pointer: coarse) {
+   but give touch users a 44px physical target without enlarging the icon.
+   Match only when the PRIMARY input is touch: `any-pointer: coarse` (or a bare
+   `hover: none`) also matches mouse-driven touchscreen Windows desktops and
+   would inflate every button there (design.md: 桌面密度不变). */
+@media (max-width: 47.999rem), ((hover: none) and (pointer: coarse)) {
   button {
     min-height: 2.75rem;
     min-width: 2.75rem;
