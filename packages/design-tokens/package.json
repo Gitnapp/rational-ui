@@ -2,7 +2,7 @@
   "name": "@garage/design-tokens",
   "version": "0.1.0",
   "private": true,
-  "description": "Garage shared design tokens (monochrome, oklch, Tailwind v4 @theme). Pure CSS, no runtime deps. Source of truth: apps/content-factory/design.md.",
+  "description": "Garage shared design tokens (monochrome, oklch, Tailwind v4 @theme). Pure CSS, no runtime deps. Source of truth: root design.md.",
   "style": "./tokens.css",
   "main": "./tokens.css",
   "exports": {

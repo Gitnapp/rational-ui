@@ -1,6 +1,6 @@
 /*
  * Garage 共享设计 token —— monochrome（ChatGPT 式黑白）。
- * 语义真相源：apps/content-factory/design.md；本文件是它的跨 app CSS 面。
+ * 语义真相源：根 design.md；本文件是它的跨 app CSS 面。
  * 消费方式：在各 app 的 globals.css 里
  *   @import "tailwindcss" source("../");
  *   @import "@garage/design-tokens";
@@ -75,6 +75,16 @@
   --input: oklch(0.916 0 0);
   --ring: oklch(0.708 0 0);
   --radius: 0.5rem;
+  --gds-shell-inset: 0.5rem;
+  --gds-header-height: 3rem;
+  --gds-content-standard: 64rem;
+  --gds-content-wide: 73.75rem;
+  --gds-content-narrow: 42rem;
+  --gds-page-gutter-mobile: 1.25rem;
+  --gds-page-gutter-tablet: 1.5rem;
+  --gds-page-gutter-desktop: 2rem;
+  --gds-control-compact: 2rem;
+  --gds-control-comfortable: 2.25rem;
 }
 
 @media (prefers-color-scheme: dark) {

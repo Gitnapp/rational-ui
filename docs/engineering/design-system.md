@@ -1,14 +1,15 @@
 # Design System — 共享 token 与各 app 设计真相源
 
 > Garage 全部 Web app 共用一套 monochrome（ChatGPT 式黑白）设计语言。**语义真相源是
-> [apps/content-factory/design.md](../../apps/content-factory/design.md)**；本文只定义共享机制与接入规则。
+> [根 design.md](../../design.md)**；本文只定义共享机制与接入规则。
 
 ## 分层
 
 | 层 | 位置 | 内容 | 改动规则 |
 |---|---|---|---|
-| 共享 token | [`packages/design-tokens`](../../packages/design-tokens/tokens.css) | semantic colors（oklch，light + dark media query）、typography 精修（`--text-micro`/`--text-reading`/字距）、radius、base styles、a11y 系统偏好适配 | 先改 content-factory design.md（语义），再同 PR 改本包 |
-| App design.md | `apps/<app>/design.md` | 该 app 的布局语言、组件约定、动效细则 | token 层语义与 CF design.md 冲突时以后者为准 |
+| 共享语义 | [`design.md`](../../design.md) | Content Factory 为主参考的颜色、排版、布局几何、图标与交互原则 | 先改根 design.md，再同 PR 改共享 token 与消费方 |
+| 共享 token | [`packages/design-tokens`](../../packages/design-tokens/tokens.css) | semantic colors（oklch，light + dark media query）、typography、layout geometry、radius、base styles、a11y 系统偏好适配 | 不复制 app 私有色值或尺寸 |
+| App design.md | `apps/<app>/design.md` | 该 app 的布局语言、组件约定、动效细则 | 与根 design.md 冲突时以后者为准 |
 | App globals.css | `apps/<app>/**/globals.css` | `@import "@garage/design-tokens"` + app 特有 utility/样式 | 禁止复制 token 值；缺 token 先加到共享包 |
 
 ## 接入方式
