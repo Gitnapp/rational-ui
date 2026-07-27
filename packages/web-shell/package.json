@@ -2,7 +2,7 @@
   "name": "@garage/web-shell",
   "version": "0.1.0",
   "private": true,
-  "description": "跨 app 应用外壳（rail 深色轨 + 顶栏功能 tab），语义真相源：根 design.md「应用外壳」",
+  "description": "跨 app 应用外壳（主题 rail + 顶栏功能 tab），语义真相源：根 design.md「应用外壳」",
   "type": "module",
   "exports": {
     ".": "./src/index.tsx"

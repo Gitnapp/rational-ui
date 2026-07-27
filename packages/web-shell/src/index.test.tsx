@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
 import {
+  RailCollapseButton,
   RailMobileDrawer,
   RailNavLink,
   RailSidebar,
@@ -67,5 +68,28 @@ describe("shared rail shell accessibility", () => {
         </RailMobileDrawer>,
       ),
     ).toBe("");
+  });
+
+  it("derives rail interaction surfaces from the theme-aware foreground token", () => {
+    const link = renderToStaticMarkup(
+      <RailNavLink
+        active
+        collapsed={false}
+        href="/users"
+        icon={<span>U</span>}
+        label="用户"
+      />,
+    );
+    const toggle = renderToStaticMarkup(
+      <RailCollapseButton
+        collapsed={false}
+        icon={<span>⇤</span>}
+        onToggle={() => undefined}
+      />,
+    );
+
+    expect(link).toContain("bg-rail-foreground/10");
+    expect(toggle).toContain("hover:bg-rail-foreground/10");
+    expect(`${link}${toggle}`).not.toContain("bg-white/");
   });
 });

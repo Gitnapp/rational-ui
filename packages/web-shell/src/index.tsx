@@ -1,10 +1,10 @@
 "use client";
 
-// 跨 app 应用外壳：左栏功能区（bg-rail 深色轨）+ 顶栏功能 tab（黑色面连续延伸）。
+// 跨 app 应用外壳：左栏功能区（bg-rail 主题轨）+ 顶栏功能 tab（同一面连续延伸）。
 // 语义真相源：根 design.md「应用外壳：左栏功能区 + 顶栏功能 tab」。三端
 // （content-factory / navigator / userportal）统一引用本包，不在 app 内另造外壳。
 import Link from "next/link";
-import React, { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import React, { useEffect, useRef, type MouseEvent, type ReactNode } from "react";
 
 export function cn(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
@@ -12,48 +12,20 @@ export function cn(...parts: Array<string | false | null | undefined>): string {
 
 const RAIL_EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
 
-/**
- * 折叠/展开侧栏时的 hover 幻影护栏：侧栏宽度 tween 会让元素在静止指针下滑入滑出，
- * 浏览器在布局重算时把 :hover 套到恰好位于指针下的元素（如「新建任务」）。
- * 锁定期间禁止侧栏/顶栏的 pointer events；指针下一次移动或按下即解锁，
- * 让 hover 只跟随真实指针轨迹。键盘触发的切换不上锁（无指针幻影）。
- */
-export function useRailHoverLock(): readonly [boolean, () => void] {
-  const [locked, setLocked] = useState(false);
-  useEffect(() => {
-    if (!locked) return;
-    const unlock = () => setLocked(false);
-    window.addEventListener("pointermove", unlock, { once: true });
-    window.addEventListener("pointerdown", unlock, { once: true });
-    return () => {
-      window.removeEventListener("pointermove", unlock);
-      window.removeEventListener("pointerdown", unlock);
-    };
-  }, [locked]);
-  return [locked, () => setLocked(true)] as const;
-}
-
 export function RailShell({
   sidebar,
   topbar,
   children,
-  hoverLocked = false,
 }: {
   readonly sidebar: ReactNode;
   readonly topbar: ReactNode;
   readonly children: ReactNode;
-  readonly hoverLocked?: boolean;
 }) {
   return (
-    <div
-      className={cn(
-        "flex h-dvh w-full overflow-hidden bg-rail text-rail-foreground",
-        hoverLocked && "[&_aside]:pointer-events-none [&_header]:pointer-events-none",
-      )}
-    >
+    <div className="flex h-dvh w-full overflow-hidden bg-rail text-rail-foreground">
       <div className="hidden h-full md:block">{sidebar}</div>
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* 顶栏：左栏黑色面向上延伸的连续部分，包裹当前功能区的 tab */}
+        {/* 顶栏：左栏主题面向上延伸的连续部分，包裹当前功能区的 tab */}
         <header className="hidden h-12 shrink-0 items-center gap-2 px-3 md:flex">{topbar}</header>
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden p-2 md:pl-0 md:pt-0">
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-lg bg-card text-card-foreground">
@@ -111,7 +83,7 @@ export function RailBrand({
   readonly icon: ReactNode;
   readonly title: string;
   readonly collapsed?: boolean;
-  /** rail = 深色轨（标题 --rail-foreground/85）；card = 浅色面（移动端）。 */
+  /** rail = 主题轨（标题 --rail-foreground/85）；card = 主内容面（移动端）。 */
   readonly tone?: "rail" | "card";
 }) {
   return (
@@ -158,8 +130,8 @@ export function RailNavLink({
         "relative flex min-h-11 items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors md:min-h-0",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70",
         active
-          ? "bg-white/10 text-rail-foreground"
-          : "text-rail-foreground/60 hover:bg-white/5 hover:text-rail-foreground",
+          ? "bg-rail-foreground/10 text-rail-foreground"
+          : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
         collapsed && "justify-center px-0",
       )}
     >
@@ -176,7 +148,7 @@ export type RailTab = {
   readonly onClick?: () => void;
 };
 
-// 顶栏功能 tab：深色面 pill，选中 = bg-white/10，未选中 = 近白 60%。
+// 顶栏功能 tab：主题面 pill，选中/hover 都从 rail foreground 派生。
 export function RailTabs({ tabs }: { readonly tabs: readonly RailTab[] }) {
   return (
     <nav aria-label="当前功能区标签" className="flex items-center gap-1">
@@ -190,8 +162,8 @@ export function RailTabs({ tabs }: { readonly tabs: readonly RailTab[] }) {
             "rounded-md px-2.5 py-1 text-sm transition-colors",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70",
             tab.active
-              ? "bg-white/10 text-rail-foreground"
-              : "text-rail-foreground/60 hover:bg-white/5 hover:text-rail-foreground",
+              ? "bg-rail-foreground/10 text-rail-foreground"
+              : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
           )}
         >
           {tab.label}
@@ -221,14 +193,14 @@ export function RailCollapseButton({
         if (event.detail > 0) event.currentTarget.blur();
         onToggle(event);
       }}
-      className="flex size-8 shrink-0 items-center justify-center rounded-md text-rail-foreground/60 transition-colors hover:bg-white/10 hover:text-rail-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70"
+      className="flex size-8 shrink-0 items-center justify-center rounded-md text-rail-foreground/60 transition-colors hover:bg-rail-foreground/10 hover:text-rail-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70"
     >
       {icon}
     </button>
   );
 }
 
-// 深色轨底部用户区：头像 + 名称（可选链接）+ 说明 + 退出动作槽。
+// 主题轨底部用户区：头像 + 名称（可选链接）+ 说明 + 退出动作槽。
 export function RailUserBlock({
   name,
   caption,
@@ -253,14 +225,14 @@ export function RailUserBlock({
   return (
     <div
       className={cn(
-        "border-t border-white/10",
+        "border-t border-rail-foreground/10",
         collapsed ? "flex flex-col items-center gap-1.5 px-1 pt-3" : "flex items-center gap-2.5 pt-3",
       )}
       title={collapsed ? name : undefined}
     >
       <span
         aria-hidden
-        className="flex size-9 shrink-0 items-center justify-center rounded-full bg-rail-foreground text-xs font-semibold text-rail ring-2 ring-white/10"
+        className="flex size-9 shrink-0 items-center justify-center rounded-full bg-rail-foreground text-xs font-semibold text-rail ring-2 ring-rail-foreground/10"
       >
         {avatarLabel}
       </span>
@@ -313,7 +285,7 @@ export function RailMobileHeader({
   );
 }
 
-// 移动端抽屉：深色轨侧栏的滑入容器。
+// 移动端抽屉：主题轨侧栏的滑入容器。
 export function RailMobileDrawer({
   open,
   onClose,
@@ -410,7 +382,7 @@ export function RailMobileDrawer({
           type="button"
           aria-label="关闭侧边栏"
           onClick={() => onCloseRef.current()}
-          className="absolute right-3 top-3 z-10 inline-flex size-8 items-center justify-center rounded-md border border-white/15 text-rail-foreground/60 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70"
+          className="absolute right-3 top-3 z-10 inline-flex size-8 items-center justify-center rounded-md border border-rail-foreground/15 text-rail-foreground/60 transition-colors hover:bg-rail-foreground/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70"
         >
           {closeIcon}
         </button>

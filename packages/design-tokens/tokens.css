@@ -66,9 +66,9 @@
   --popover-foreground: oklch(0.16 0 0);
   --primary: oklch(0.19 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  /* 应用外壳深色轨（左栏 + 顶栏 tab 区）：两主题都保持近黑，不随 dark 反转。 */
-  --rail: oklch(0.19 0 0);
-  --rail-foreground: oklch(0.985 0 0);
+  /* 应用外壳轨（左栏 + 顶栏 tab 区）：浅色跟随页面底，暗色保持全站最深面。 */
+  --rail: oklch(0.971 0 0);
+  --rail-foreground: oklch(0.16 0 0);
   --secondary: oklch(0.94 0 0);
   --secondary-foreground: oklch(0.19 0 0);
   --muted: oklch(0.94 0 0);
