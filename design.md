@@ -24,6 +24,8 @@ colors:
     popover-foreground: "oklch(0.16 0 0)"
     primary: "oklch(0.19 0 0)"          # 主操作填充（近黑）
     primary-foreground: "oklch(0.985 0 0)"
+    rail: "oklch(0.19 0 0)"              # 外壳深色轨（左栏 + 顶栏 tab 区）
+    rail-foreground: "oklch(0.985 0 0)"
     secondary: "oklch(0.94 0 0)"        # 次级面 / 选中态底
     secondary-foreground: "oklch(0.19 0 0)"
     muted: "oklch(0.94 0 0)"            # 静默面 / 用户气泡 / hover 底
@@ -42,6 +44,8 @@ colors:
     popover-foreground: "oklch(0.985 0 0)"
     primary: "oklch(0.922 0 0)"
     primary-foreground: "oklch(0.205 0 0)"
+    rail: "oklch(0.1 0 0)"               # 深色轨不反转，保持全站最深面
+    rail-foreground: "oklch(0.985 0 0)"
     secondary: "oklch(0.269 0 0)"
     secondary-foreground: "oklch(0.985 0 0)"
     muted: "oklch(0.269 0 0)"
@@ -81,6 +85,11 @@ spacing:
 layout:
   shellInset: 8px
   headerHeight: 48px
+  sidebar:
+    expanded: 260px
+    collapsed: 48px        # 图标轨（w-12）
+    surface: "近黑专用 token --rail（两主题均不反转；dark 比 background 更深）"
+    toggle: "PanelLeft ghost icon button（size-8 / 16px icon），tooltip 收起侧栏/展开侧栏"
   content:
     standard: 1024px
     wide: 1180px
@@ -147,6 +156,37 @@ Navigator 与 User Portal 复用同一套视觉语法，但保留各自的信息
   gutter 依次为移动端 `20px`、平板 `24px`、桌面 `32px`。
 - 禁止用孤立的大块灰色 hero、装饰圆形、卡片套卡片制造层级。优先留白、分组间距、细边与 tonal surface。
 
+### 应用外壳：左栏功能区 + 顶栏功能 tab
+
+- **两级导航分工**：左栏是**功能区**（一级导航，承载功能入口与全局动作）；顶栏是**当前
+  功能区内的 tab**（二级导航）。tab 属于功能区、不跨区复用；切左栏功能区才换顶栏 tab 组。
+- **黑色面连续延伸**：左栏为近黑深色面（专用 token `--rail` / `bg-rail`，**不随 dark 主题反转**：
+  light = oklch 0.19，dark 比 `background` 更深），该深色面**默认向上延伸覆盖顶栏**，把顶栏的
+  功能 tab 包裹在同一黑色面内；左栏与顶栏之间不留白缝、不用 border 切断。主内容区保持
+  `card` 白面 + `rounded-lg` + 8px inset 浮起，黑白对比即外壳层级。（整体结构参照
+  content-factory 的「侧栏 + 顶栏 tab」，但 tab 区黑色延伸是新规：content-factory 现状 tab
+  仍在白色 header 内，以此文件为准、由后续实现落地。）
+- **深色面上的 tab**：未选中 = `--rail-foreground` 60% 文本，hover 转实 + `bg-white/5`；选中 =
+  `bg-white/10` 圆角 pill + `--rail-foreground` 文本；active indicator 沿用 layout tween ~360ms。
+  深色面上不用彩色、不用阴影分层，焦点环保持可见。
+- **侧栏收起按钮统一样式**（以 content-factory 为准）：顶栏最左侧 `PanelLeft` ghost icon
+  button（`size-8`、icon 16px），aria-label/tooltip「收起侧栏 / 展开侧栏」；折叠后左栏收成
+  `48px` 图标轨，品牌与入口只留图标，图标位置在展开/折叠间不横向跳动。禁止各 app 自造收起
+  按钮形态（如 navigator 的侧栏底部整行按钮）。
+- **品牌区（logo + 标题）**：样式真相源是 content-factory 的 `ContentFactoryBrand`——
+  `size-7` 圆角细边 `bg-card` 徽章（icon 16px）+ `text-sm font-normal` 85% 标题；**不可点击**。
+  深色轨上徽章保持 `bg-card` 不变，标题色用 `--rail-foreground/85`。三端（content-factory /
+  navigator / userportal）统一引用此规格，不各自改造字号、字重或徽章几何。
+- **深色轨底部 = 用户区**：头像（首字母圆形，`bg-rail-foreground`）+ 名称（可带说明文字或
+  链接）+ 退出动作；折叠态只留头像。
+- **共享实现**：外壳组件统一来自 `packages/web-shell`（`@garage/web-shell`：`RailShell` /
+  `RailSidebar` / `RailBrand` / `RailNavLink` / `RailTabs` / `RailCollapseButton` /
+  `RailUserBlock` / 移动端顶栏与抽屉），三端只组装、不另造外壳。折叠切换时的 hover/focus
+  幻影护栏（`useRailHoverLock` 指针锁定 + 点击后 blur）也钉在包里；content-factory 的会话
+  列表等 app 特有内容作为 slot 注入。移动端抽屉必须使用 modal dialog 语义，打开后把焦点移入、
+  Tab/Shift+Tab 限制在抽屉内、Escape 关闭，并在关闭后把焦点还给触发按钮。
+- 折叠/展开动效沿用「单一 width tween 300ms」（见 动效）；顶栏 tab 区不随折叠位移。
+
 ### 标题层级
 
 - 页面只有一个 `h1`：`20–24px / 600`，承担当前任务名称。
@@ -191,7 +231,8 @@ Geist Sans 承载 UI 与正文，Geist Mono 承载代码/数据/需对齐的数�
 ## 间距与布局
 
 4px 标度（见 frontmatter）。布局语言（`AgentChatShell` / `ContentPageShell` 共用）：
-`bg-muted/30` 外底 + `p-2` 内缩 + 圆角 `bg-card` 主区，header 高 `h-12`。资源页主区
+近黑深色面外底（左栏 + 顶栏功能 tab 区连续延伸，见「应用外壳」）+ `p-2` 内缩 +
+圆角 `bg-card` 主区，header 高 `h-12`。资源页主区
 `mx-auto` 居中、`p-4 sm:p-6`。聊天线宽 `--thread-max-width: 44rem`。
 
 资源 tab 内容宽度统一 `max-w-5xl`（真相源 `content-resource-shell.tsx` 的 `STANDARD_CONTENT`），
@@ -272,10 +313,14 @@ Suggestion / Error / AuiIf），**不为凑数重写**。新增交互优先复�
 ## Do / Don't
 
 - ✅ 用灰阶排层级：`foreground` 主、`muted-foreground` 次、`border` 分隔。
+- ✅ 左栏近黑面向上延伸包裹顶栏功能 tab；左栏 = 功能区、顶栏 = 区内 tab。
+- ✅ 外壳统一组装 `@garage/web-shell` 共享组件；侧栏底部放用户区（头像 + 名称 + 退出）。
+- ✅ 侧栏收起统一用顶栏左侧 PanelLeft ghost icon（CF 样式），折叠成 48px 图标轨。
 - ✅ 主操作只给一个 `primary`（近黑）按钮；其余用 ghost/outline。
 - ✅ 数字 tabular-nums；标题负字距；焦点环始终可见。
 - ✅ 颜色只用于状态（error/success/warning），且成对 class 单一真相源。
 - ❌ 不引入蓝色或任何品牌彩色 accent。
+- ❌ 不在左栏与顶栏之间留白缝/切边；不自造侧栏收起按钮形态。
 - ❌ 不用任意值字号；不混超过 3 档字重。
 - ❌ 不做 tab 切换 entrance 渐入；不做 spring/bounce；不让侧栏多动画抢速度。
 - ❌ 不写营销/填充词；不给按钮起「确认/OK」这类无信息名。

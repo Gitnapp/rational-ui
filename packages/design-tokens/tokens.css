@@ -17,6 +17,8 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-rail: var(--rail);
+  --color-rail-foreground: var(--rail-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -64,6 +66,9 @@
   --popover-foreground: oklch(0.16 0 0);
   --primary: oklch(0.19 0 0);
   --primary-foreground: oklch(0.985 0 0);
+  /* 应用外壳深色轨（左栏 + 顶栏 tab 区）：两主题都保持近黑，不随 dark 反转。 */
+  --rail: oklch(0.19 0 0);
+  --rail-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.94 0 0);
   --secondary-foreground: oklch(0.19 0 0);
   --muted: oklch(0.94 0 0);
@@ -98,6 +103,9 @@
     --popover-foreground: oklch(0.985 0 0);
     --primary: oklch(0.922 0 0);
     --primary-foreground: oklch(0.205 0 0);
+    /* 深色轨保持全站最深面（比 background 0.145 更深）。 */
+    --rail: oklch(0.1 0 0);
+    --rail-foreground: oklch(0.985 0 0);
     --secondary: oklch(0.269 0 0);
     --secondary-foreground: oklch(0.985 0 0);
     --muted: oklch(0.269 0 0);
@@ -124,6 +132,9 @@
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
+  /* 深色轨保持全站最深面（比 background 0.145 更深）。 */
+  --rail: oklch(0.1 0 0);
+  --rail-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
