@@ -12,6 +12,113 @@ export function cn(...parts: Array<string | false | null | undefined>): string {
 
 const RAIL_EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
 
+// 统一 Casdoor 登录提示页骨架（issue #515）。视觉基准 = User Portal `/login`：
+// 居中低噪音背景 + 卡片 + 图标 + 应用名旁 Info tooltip + 全宽主按钮。
+// 本组件不含任何认证逻辑或客户端 token，只渲染提示并指向各 app 自己的
+// `/api/auth/login`；按钮 class 逐字复刻 userportal shadcn Button(default,lg)，
+// 保证三端像素一致且不依赖各 app 各自的 Button 实现。
+const LOGIN_BUTTON_CLASS =
+  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-normal outline-none transition-[color,background-color,border-color,box-shadow,opacity,transform] duration-100 ease-out active:scale-[0.98] motion-reduce:transform-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-5";
+
+export function CasdoorLoginPrompt({
+  appName,
+  icon,
+  infoLabel,
+  loginHref,
+  loginLabel = "使用 Casdoor 登录",
+  as = "main",
+  disabled = false,
+  error,
+  notice,
+  children,
+}: {
+  readonly appName: string;
+  /** 外层 app shell 已提供 `<main>` landmark 时传 "div"，避免嵌套 landmark。 */
+  readonly as?: "main" | "div";
+  /** 卡片首行图标（锁 / 统一账号），由 app 注入自己的 icon set。 */
+  readonly icon: ReactNode;
+  /** Info tooltip 正文：登录、密码与 MFA 由 Casdoor 负责。 */
+  readonly infoLabel: string;
+  readonly loginHref: string;
+  readonly loginLabel?: string;
+  /** Casdoor 未配置等 fail-closed 状态：主按钮禁用但视觉层级不变。 */
+  readonly disabled?: boolean;
+  /** OAuth callback 等错误提示，显示在标题与主按钮之间。 */
+  readonly error?: ReactNode;
+  /** 主按钮下方的次要说明（如未配置原因）。 */
+  readonly notice?: ReactNode;
+  /** 已登录 continuation 等分支，替换主按钮留在同一卡片骨架内。 */
+  readonly children?: ReactNode;
+}) {
+  const Root = as;
+  return (
+    <Root className="grid min-h-dvh place-items-center bg-muted/30 p-6 text-foreground">
+      <section className="w-full max-w-md rounded-lg bg-card p-8 text-card-foreground">
+        <span className="grid size-10 place-items-center rounded-lg border shadow-xs">{icon}</span>
+        <div className="mt-6 flex items-center gap-1">
+          <h1 className="text-2xl font-semibold">{appName}</h1>
+          <LoginInfoHint label={infoLabel} />
+        </div>
+        {error ? (
+          <p
+            className="mt-5 rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+            role="alert"
+          >
+            {error}
+          </p>
+        ) : null}
+        {children ?? (
+          <a
+            aria-disabled={disabled || undefined}
+            className={cn(
+              LOGIN_BUTTON_CLASS,
+              "mt-7 w-full",
+              disabled && "pointer-events-none bg-muted text-muted-foreground hover:bg-muted",
+            )}
+            data-slot="button"
+            href={disabled ? undefined : loginHref}
+          >
+            {loginLabel}
+          </a>
+        )}
+        {notice ? <p className="mt-3 text-xs text-muted-foreground">{notice}</p> : null}
+      </section>
+    </Root>
+  );
+}
+
+// 与 userportal `components/info-hint.tsx` 同构：hover/focus-within 展开的
+// 纯 CSS tooltip，键盘可达（button + focus ring），无客户端状态。
+function LoginInfoHint({ label }: { readonly label: string }) {
+  return (
+    <span className="group relative inline-flex shrink-0 align-middle">
+      <button
+        aria-label={`说明：${label}`}
+        className="grid size-6 place-items-center rounded-md text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+        type="button"
+      >
+        <svg
+          aria-hidden
+          className="size-3.5"
+          fill="currentColor"
+          height="1em"
+          viewBox="0 0 256 256"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z" />
+        </svg>
+      </button>
+      <span
+        className="pointer-events-none absolute left-1/2 top-full z-50 mt-1.5 hidden w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-md border bg-popover px-3 py-2 text-xs leading-5 text-popover-foreground shadow-md group-hover:block group-focus-within:block"
+        role="tooltip"
+      >
+        {label}
+      </span>
+    </span>
+  );
+}
+
 export function RailShell({
   sidebar,
   topbar,
