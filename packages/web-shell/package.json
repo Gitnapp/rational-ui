@@ -8,10 +8,11 @@
     ".": "./src/index.tsx"
   },
   "files": [
-    "src"
+    "src",
+    "scripts/assert-tailwind-build.mjs"
   ],
   "scripts": {
-    "test": "vitest run"
+    "test": "node --test scripts/*.node-test.mjs && vitest run"
   },
   "peerDependencies": {
     "next": ">=15",
