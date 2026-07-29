@@ -31,6 +31,10 @@
 3. shadcn 组件按 app 各自 own（copy-paste 模型），不建共享 ui 组件包；新组件用 shadcn CLI 拉取后
    按 CF 同名组件对齐 variant。
 4. dark mode 统一 `prefers-color-scheme`（media query），不用 `.dark` class（无 theme switcher）。
+5. **高亮部分必须是正方形**：rail 上表达选中 / 激活 / hover 的独立着色面（图标轨入口、
+   icon-only hover 面、主题轨用户区头像）用 `size-*` 钉死等宽高，禁止用 `px/py` 拼近似方形，
+   头像不用 `rounded-full`；带文字的 tab / chip / badge 不受约束。语义与边界见
+   [根 design.md「高亮几何」](../../design.md)，共享实现在 `packages/web-shell`。
 
 ## 消费方
 
