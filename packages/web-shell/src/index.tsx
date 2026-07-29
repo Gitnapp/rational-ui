@@ -307,19 +307,34 @@ export function RailCollapseButton({
   );
 }
 
-// 主题轨底部用户区：头像 + 名称（可选链接）+ 说明 + 退出动作槽。
+// 主题轨底部用户区：头像 + 名称（可选链接）+ 说明 + 统一退出动作。
+// 退出交互（图标按钮样式、hover 语义色、focus ring、可访问名称、GET/POST 差异）
+// 全部收敛在这里，三端只提供身份数据、说明、账号链接与 logout endpoint/method。
+const RAIL_LOGOUT_LABEL = "退出登录";
+const RAIL_LOGOUT_CLASS =
+  "flex size-8 shrink-0 items-center justify-center rounded-md text-rail-foreground/60 transition-colors hover:bg-rail-foreground/10 hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
 export function RailUserBlock({
   name,
   caption,
   collapsed,
   nameHref,
-  logout,
+  logoutHref,
+  logoutIcon,
+  logoutMethod = "get",
+  logoutLabel = RAIL_LOGOUT_LABEL,
 }: {
   readonly name: string;
   readonly caption?: ReactNode;
   readonly collapsed: boolean;
   readonly nameHref?: string;
-  readonly logout: ReactNode;
+  /** 各 app 自己的 logout endpoint（如 `/api/auth/logout`）。 */
+  readonly logoutHref: string;
+  /** 退出图标，由 app 注入自己的 icon family（design.md「图标」）。 */
+  readonly logoutIcon: ReactNode;
+  /** GET = 普通链接导航；post = 显式表单提交。默认 get，无隐藏副作用。 */
+  readonly logoutMethod?: "get" | "post";
+  readonly logoutLabel?: string;
 }) {
   const avatarLabel = Array.from(name.trim())[0]?.toUpperCase() || "U";
   const identity = (
@@ -354,7 +369,27 @@ export function RailUserBlock({
         ) : (
           <span className="min-w-0 flex-1">{identity}</span>
         ))}
-      {logout}
+      {logoutMethod === "post" ? (
+        <form action={logoutHref} className="shrink-0" method="post">
+          <button
+            aria-label={logoutLabel}
+            className={RAIL_LOGOUT_CLASS}
+            title={logoutLabel}
+            type="submit"
+          >
+            {logoutIcon}
+          </button>
+        </form>
+      ) : (
+        <a
+          aria-label={logoutLabel}
+          className={RAIL_LOGOUT_CLASS}
+          href={logoutHref}
+          title={logoutLabel}
+        >
+          {logoutIcon}
+        </a>
+      )}
     </div>
   );
 }

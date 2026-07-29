@@ -9,6 +9,7 @@ import {
   RailNavLink,
   RailSidebar,
   RailTabs,
+  RailUserBlock,
 } from "./index";
 
 describe("shared rail shell accessibility", () => {
@@ -92,6 +93,74 @@ describe("shared rail shell accessibility", () => {
     expect(link).toContain("bg-rail-foreground/10");
     expect(toggle).toContain("hover:bg-rail-foreground/10");
     expect(`${link}${toggle}`).not.toContain("bg-white/");
+  });
+});
+
+describe("shared rail account block", () => {
+  const baseProps = {
+    logoutHref: "/api/auth/logout",
+    logoutIcon: <span>⎋</span>,
+    name: "林晨",
+  };
+
+  it("renders name, caption and an accessible logout action when expanded", () => {
+    const markup = renderToStaticMarkup(
+      <RailUserBlock {...baseProps} caption="管理员" collapsed={false} />,
+    );
+
+    expect(markup).toContain("林晨");
+    expect(markup).toContain("管理员");
+    expect(markup).toContain('aria-label="退出登录"');
+    expect(markup).toContain('title="退出登录"');
+    expect(markup).toContain('href="/api/auth/logout"');
+  });
+
+  it("keeps the avatar initial and a keyboard-reachable logout when collapsed", () => {
+    const markup = renderToStaticMarkup(
+      <RailUserBlock {...baseProps} caption="管理员" collapsed />,
+    );
+
+    // 折叠态只留头像首字母 + 退出动作，名称走容器 title tooltip。
+    expect(markup).toContain(">林<");
+    expect(markup).toContain('title="林晨"');
+    expect(markup).not.toContain("管理员");
+    expect(markup).toContain('aria-label="退出登录"');
+    expect(markup).toContain("focus-visible:ring-2");
+  });
+
+  it("expresses the GET/POST logout difference through an explicit prop", () => {
+    const get = renderToStaticMarkup(<RailUserBlock {...baseProps} collapsed={false} />);
+    const post = renderToStaticMarkup(
+      <RailUserBlock {...baseProps} collapsed={false} logoutMethod="post" />,
+    );
+
+    expect(get).toContain('<a aria-label="退出登录"');
+    expect(get).not.toContain("<form");
+    expect(post).toContain('action="/api/auth/logout"');
+    expect(post).toContain('method="post"');
+    expect(post).toContain('type="submit"');
+    expect(post).not.toContain("<a ");
+    // 两种 method 共享同一退出视觉规格（design.md「主题轨底部 = 用户区」）。
+    expect(post).toContain("hover:text-destructive");
+    expect(get).toContain("hover:text-destructive");
+  });
+
+  it("links the primary name to the optional account page only when provided", () => {
+    const withAccount = renderToStaticMarkup(
+      <RailUserBlock {...baseProps} collapsed={false} nameHref="/account" />,
+    );
+    const withoutAccount = renderToStaticMarkup(
+      <RailUserBlock {...baseProps} collapsed={false} />,
+    );
+
+    expect(withAccount).toContain('href="/account"');
+    expect(withoutAccount).not.toContain('href="/account"');
+  });
+
+  it("falls back to a deterministic avatar initial for an empty display name", () => {
+    expect(
+      renderToStaticMarkup(<RailUserBlock {...baseProps} collapsed name="   " />),
+    ).toContain(">U<");
   });
 });
 

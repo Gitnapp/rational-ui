@@ -177,7 +177,12 @@ Navigator 与 User Portal 复用同一套视觉语法，但保留各自的信息
   主题轨上徽章保持 `bg-card`，标题色用 `--rail-foreground/85`。三端（content-factory /
   navigator / userportal）统一引用此规格，不各自改造字号、字重或徽章几何。
 - **主题轨底部 = 用户区**：头像（首字母圆形，`bg-rail-foreground`）+ 名称（可带说明文字或
-  链接）+ 退出动作；折叠态只留头像。
+  链接）+ 退出动作；折叠态只留头像。整块由 `RailUserBlock` 统一渲染：退出的图标按钮几何、
+  hover 语义色、focus ring 与可访问名称都钉在包里，app 只传身份数据、说明、可选账号链接与
+  自己的 logout endpoint；GET/POST 差异由显式 `logoutMethod` 表达（post 渲染表单提交），
+  不由 app 各自拼 form/link。**主名称必须是用户可读名称**，按
+  `displayName?.trim() || name?.trim() || subject` 兜底，`subject` 只在缺少 profile
+  （PAT、local-dev 等）时兜底；展示名只用于展示，鉴权/归属/审计仍只用 immutable `subject`。
 - **共享实现**：外壳组件统一来自 `packages/web-shell`（`@garage/web-shell`：`RailShell` /
   `RailSidebar` / `RailBrand` / `RailNavLink` / `RailTabs` / `RailCollapseButton` /
   `RailUserBlock` / 移动端顶栏与抽屉），三端只组装、不另造外壳。折叠切换时的 hover/focus
