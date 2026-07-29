@@ -205,7 +205,8 @@ indicator、图标轨入口、icon-only 控件的 hover 面、主题轨用户区
   `RailUserBlock` / 移动端顶栏与抽屉），三端只组装、不另造外壳。折叠切换时的 hover/focus
   交互护栏钉在包里：鼠标点击后 blur，侧栏 transition 期间不得对 header/aside 使用全局
   `pointer-events:none`，确保鼠标、触屏和键盘的每次 toggle 都生效。content-factory 的会话
-  列表等 app 特有内容作为 slot 注入。移动端抽屉必须使用 modal dialog 语义，打开后把焦点移入、
+  列表不注入外壳：它是工作台页（`/` 与 `/chat/[id]`）主内容面内的页面元素（移动端经外壳
+  顶栏按钮唤起 Sheet），离开工作台组即不渲染。移动端抽屉必须使用 modal dialog 语义，打开后把焦点移入、
   Tab/Shift+Tab 限制在抽屉内、Escape 关闭，并在关闭后把焦点还给触发按钮。
 - 折叠/展开动效沿用「单一 width tween 300ms」（见 动效）；顶栏 tab 区不随折叠位移。
 
