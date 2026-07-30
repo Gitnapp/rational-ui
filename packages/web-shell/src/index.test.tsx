@@ -6,6 +6,7 @@ import {
   CasdoorLoginPrompt,
   RailCollapseButton,
   RailMobileDrawer,
+  RailMobileHeader,
   RailNavLink,
   RailSidebar,
   RailTabs,
@@ -56,6 +57,60 @@ describe("shared rail shell accessibility", () => {
     expect(sidebar).toContain("min-h-11");
     expect(sidebar).toContain('aria-current="page"');
     expect(tabs).toContain('aria-label="当前功能区标签"');
+  });
+
+  // 单 tab 功能区（userportal）没有可切换目标，当前位置必须是不可点的 pill，
+  // 否则渲染出一个指向自己的链接。三端只保留这一份顶栏实现。
+  it("renders a single-tab area as a static current-position pill instead of a link", () => {
+    const markup = renderToStaticMarkup(
+      <RailTabs tabs={[{ active: true, href: "/users", label: "用户", static: true }]} />,
+    );
+
+    expect(markup).toContain('aria-label="当前功能区标签"');
+    expect(markup).toContain('aria-current="page"');
+    expect(markup).toContain("bg-rail-foreground/10");
+    expect(markup).not.toContain("<a ");
+    expect(markup).not.toContain('href="/users"');
+  });
+
+  // 抽屉入口的可访问名称各 app 语义不同（侧边栏 / 导航菜单），由 prop 注入而非各自造 header。
+  it("labels the mobile drawer trigger from the app-provided menu label and hosts trailing actions", () => {
+    const markup = renderToStaticMarkup(
+      <RailMobileHeader
+        currentLabel="工作台"
+        menuIcon={<span>≡</span>}
+        menuLabel="打开导航菜单"
+        onOpen={() => undefined}
+        tabs={[
+          { active: true, href: "/admin", label: "总览" },
+          { active: false, href: "/admin/models", label: "聊天模型" },
+        ]}
+        title="内容工厂"
+        trailing={<button type="button">任务历史</button>}
+      />,
+    );
+
+    expect(markup).toContain('aria-label="打开导航菜单"');
+    expect(markup).not.toContain('aria-label="打开侧边栏"');
+    expect(markup).toContain("任务历史");
+    expect(markup).toContain('data-testid="rail-mobile-tabs"');
+    expect(markup).toContain("聊天模型");
+  });
+
+  it("defaults the mobile drawer trigger label and keeps the title centred without a trailing action", () => {
+    const markup = renderToStaticMarkup(
+      <RailMobileHeader
+        currentLabel="概览"
+        menuIcon={<span>≡</span>}
+        onOpen={() => undefined}
+        title="User Portal"
+      />,
+    );
+
+    expect(markup).toContain('aria-label="打开侧边栏"');
+    // 单 tab（或无 tab）不渲染移动端 tab 行：没有可切换目标。
+    expect(markup).not.toContain('data-testid="rail-mobile-tabs"');
+    expect(markup).toContain('class="size-10"');
   });
 
   it("does not expose a closed drawer in server output", () => {
