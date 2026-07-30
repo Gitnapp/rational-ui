@@ -202,7 +202,11 @@ indicator、图标轨入口、icon-only 控件的 hover 面、主题轨用户区
   （PAT、local-dev 等）时兜底；展示名只用于展示，鉴权/归属/审计仍只用 immutable `subject`。
 - **共享实现**：外壳组件统一来自 `packages/web-shell`（`@garage/web-shell`：`RailShell` /
   `RailSidebar` / `RailBrand` / `RailNavLink` / `RailTabs` / `RailCollapseButton` /
-  `RailUserBlock` / 移动端顶栏与抽屉），三端只组装、不另造外壳。折叠切换时的 hover/focus
+  `RailUserBlock` / 移动端顶栏与抽屉），三端只组装、不另造外壳。`Button` 同样收敛在这个包里
+  （`@garage/web-shell` 的 `Button` / `buttonVariants`，真相源 `src/button.tsx`）：size 与
+  variant 表只有一份，各 app 的 `components/ui/button` 只做转出，禁止分叉尺寸或复刻 class 字面量。
+  移动端顶栏（`RailMobileHeader`）必须能切换当前功能区的子页 tab——桌面顶栏在移动端不渲染，
+  缺这一行等于移动端无法进入同功能区的其它子页。折叠切换时的 hover/focus
   交互护栏钉在包里：鼠标点击后 blur，侧栏 transition 期间不得对 header/aside 使用全局
   `pointer-events:none`，确保鼠标、触屏和键盘的每次 toggle 都生效。content-factory 的会话
   列表不注入外壳：它是工作台页（`/` 与 `/chat/[id]`）主内容面内的页面元素（移动端经外壳
