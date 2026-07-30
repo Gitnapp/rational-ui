@@ -263,29 +263,41 @@ export type RailTab = {
   readonly href: string;
   readonly active: boolean;
   readonly onClick?: () => void;
+  /** 单 tab 功能区：渲染为不可点的当前位置 pill，而非导航链接（如 userportal）。 */
+  readonly static?: boolean;
 };
 
 // 顶栏功能 tab：主题面 pill，选中/hover 都从 rail foreground 派生。
 export function RailTabs({ tabs }: { readonly tabs: readonly RailTab[] }) {
   return (
     <nav aria-label="当前功能区标签" className="flex items-center gap-1">
-      {tabs.map((tab) => (
-        <Link
-          key={tab.href}
-          href={tab.href}
-          aria-current={tab.active ? "page" : undefined}
-          onClick={tab.onClick}
-          className={cn(
-            "rounded-md px-2.5 py-1 text-sm transition-colors",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70",
-            tab.active
-              ? "bg-rail-foreground/10 text-rail-foreground"
-              : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
-          )}
-        >
-          {tab.label}
-        </Link>
-      ))}
+      {tabs.map((tab) =>
+        tab.static ? (
+          <span
+            key={tab.label}
+            aria-current={tab.active ? "page" : undefined}
+            className="rounded-md bg-rail-foreground/10 px-2.5 py-1 text-sm text-rail-foreground"
+          >
+            {tab.label}
+          </span>
+        ) : (
+          <Link
+            key={tab.href}
+            href={tab.href}
+            aria-current={tab.active ? "page" : undefined}
+            onClick={tab.onClick}
+            className={cn(
+              "rounded-md px-2.5 py-1 text-sm transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70",
+              tab.active
+                ? "bg-rail-foreground/10 text-rail-foreground"
+                : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
+            )}
+          >
+            {tab.label}
+          </Link>
+        ),
+      )}
     </nav>
   );
 }
@@ -412,6 +424,7 @@ export function RailMobileHeader({
   currentLabel,
   onOpen,
   menuIcon,
+  menuLabel = "打开侧边栏",
   tabs,
   trailing,
 }: {
@@ -419,6 +432,8 @@ export function RailMobileHeader({
   readonly currentLabel?: string;
   readonly onOpen: () => void;
   readonly menuIcon: ReactNode;
+  /** 抽屉入口的可访问名称；各 app 的抽屉语义不同（侧边栏 / 导航菜单）。 */
+  readonly menuLabel?: string;
   /** 当前功能区的子页 tab；<=1 个时不渲染 tab 行（无可切换目标）。 */
   readonly tabs?: readonly RailTab[];
   /** 右侧可选动作（如 content-factory 的任务历史入口），占位保持标题居中。 */
@@ -429,7 +444,7 @@ export function RailMobileHeader({
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
-          aria-label="打开侧边栏"
+          aria-label={menuLabel}
           onClick={onOpen}
           className="inline-flex size-10 items-center justify-center rounded-md border text-foreground transition-colors hover:border-foreground/20 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
