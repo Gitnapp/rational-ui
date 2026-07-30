@@ -113,7 +113,7 @@ rounded:
   md: calc(radius - 2px)
   lg: radius
   xl: calc(radius + 4px)
-  full: 9999px      # 头像 / pill / 圆形控件
+  full: 9999px      # 文字 pill chip / badge / 进度条与状态点；不用于 rail 图标位高亮
   composer: 1.5rem  # composer 外壳
 motion:
   durations: { instant: 0ms, fast: 100ms, base: 200ms, sheet: 250ms, slow: 300ms }
@@ -156,6 +156,22 @@ Navigator 与 User Portal 复用同一套视觉语法，但保留各自的信息
   gutter 依次为移动端 `20px`、平板 `24px`、桌面 `32px`。
 - 禁止用孤立的大块灰色 hero、装饰圆形、卡片套卡片制造层级。优先留白、分组间距、细边与 tonal surface。
 
+### 高亮几何
+
+**高亮部分必须是正方形。** 「高亮」= 表达选中 / 激活 / hover 的**独立着色面**（导航 active
+indicator、图标轨入口、icon-only 控件的 hover 面、主题轨用户区头像等图标位）。当着色面里
+只有图标、两侧没有文字撑宽度时，宽高必须相等——用 `size-*`（如 `size-8` = 32×32）钉死，
+禁止靠 `px-*`/`py-*` 拼出 32×40 这类近似方形的长方形。
+
+- 折叠态图标轨（`48px`）的入口高亮固定 `size-8` 并水平居中。触屏命中区只在展开态用
+  `min-h-11` 撑到 44px，**不得把 44px 高度带进折叠态**，否则高亮退化成长方形。
+- 主题轨用户区头像是 `size-9` 正方形着色面，走 `rounded-md`，不用 `rounded-full`。
+  正方形指外形轮廓，圆角仍沿用同一半径家族（见 圆角与层级）。
+- 带文字的高亮（顶栏功能 tab、列表行、下拉项、pill chip / badge）宽度由文字决定，
+  不受本条约束；进度条、状态点等纯装饰轨也不受约束。
+- 本条约束**共享外壳** `packages/web-shell` 与三端 shell 的 rail 表面；各 app 页面内的
+  头像组件（如 CF `components/ui/avatar.tsx`）按各自 shadcn variant 演进，不由本条强制迁移。
+
 ### 应用外壳：左栏功能区 + 顶栏功能 tab
 
 - **两级导航分工**：左栏是**功能区**（一级导航，承载功能入口与全局动作）；顶栏是**当前
@@ -176,8 +192,9 @@ Navigator 与 User Portal 复用同一套视觉语法，但保留各自的信息
   `size-7` 圆角细边 `bg-card` 徽章（icon 16px）+ `text-sm font-normal` 85% 标题；**不可点击**。
   主题轨上徽章保持 `bg-card`，标题色用 `--rail-foreground/85`。三端（content-factory /
   navigator / userportal）统一引用此规格，不各自改造字号、字重或徽章几何。
-- **主题轨底部 = 用户区**：头像（首字母圆形，`bg-rail-foreground`）+ 名称（可带说明文字或
-  链接）+ 退出动作；折叠态只留头像。整块由 `RailUserBlock` 统一渲染：退出的图标按钮几何、
+- **主题轨底部 = 用户区**：头像（首字母 `size-9` 正方形着色面，`bg-rail-foreground`）+ 名称
+  （可带说明文字或链接）+ 退出动作；折叠态只留头像。整块由 `RailUserBlock` 统一渲染：
+  退出的图标按钮几何、
   hover 语义色、focus ring 与可访问名称都钉在包里，app 只传身份数据、说明、可选账号链接与
   自己的 logout endpoint；GET/POST 差异由显式 `logoutMethod` 表达（post 渲染表单提交），
   不由 app 各自拼 form/link。**主名称必须是用户可读名称**，按
@@ -188,7 +205,8 @@ Navigator 与 User Portal 复用同一套视觉语法，但保留各自的信息
   `RailUserBlock` / 移动端顶栏与抽屉），三端只组装、不另造外壳。折叠切换时的 hover/focus
   交互护栏钉在包里：鼠标点击后 blur，侧栏 transition 期间不得对 header/aside 使用全局
   `pointer-events:none`，确保鼠标、触屏和键盘的每次 toggle 都生效。content-factory 的会话
-  列表等 app 特有内容作为 slot 注入。移动端抽屉必须使用 modal dialog 语义，打开后把焦点移入、
+  列表不注入外壳：它是工作台页（`/` 与 `/chat/[id]`）主内容面内的页面元素（移动端经外壳
+  顶栏按钮唤起 Sheet），离开工作台组即不渲染。移动端抽屉必须使用 modal dialog 语义，打开后把焦点移入、
   Tab/Shift+Tab 限制在抽屉内、Escape 关闭，并在关闭后把焦点还给触发按钮。
 - 折叠/展开动效沿用「单一 width tween 300ms」（见 动效）；顶栏 tab 区不随折叠位移。
 
@@ -257,7 +275,8 @@ Geist Sans 承载 UI 与正文，Geist Mono 承载代码/数据/需对齐的数�
 ## 圆角与层级
 
 层级优先用**色调面 + 细边**，阴影克制。半径见 frontmatter；一屏保持同一半径家族，
-不混圆角与直角。composer 用 1.5rem 大圆角，pill/头像用 full。
+不混圆角与直角。composer 用 1.5rem 大圆角，带文字的 pill chip / badge 用 full；
+rail 图标位高亮与主题轨头像是正方形 + `rounded-md`（见 高亮几何）。
 
 ## 动效
 
@@ -321,11 +340,13 @@ Suggestion / Error / AuiIf），**不为凑数重写**。新增交互优先复�
 - ✅ 左栏主题面向上延伸包裹顶栏功能 tab；左栏 = 功能区、顶栏 = 区内 tab。
 - ✅ 外壳统一组装 `@garage/web-shell` 共享组件；侧栏底部放用户区（头像 + 名称 + 退出）。
 - ✅ 侧栏收起统一用顶栏左侧 PanelLeft ghost icon（CF 样式），折叠成 48px 图标轨。
+- ✅ 图标位高亮用 `size-*` 钉成正方形（折叠态入口 `size-8`）；主题轨头像走 `rounded-md`。
 - ✅ 主操作只给一个 `primary`（近黑）按钮；其余用 ghost/outline。
 - ✅ 数字 tabular-nums；标题负字距；焦点环始终可见。
 - ✅ 颜色只用于状态（error/success/warning），且成对 class 单一真相源。
 - ❌ 不引入蓝色或任何品牌彩色 accent。
 - ❌ 不在左栏与顶栏之间留白缝/切边；不自造侧栏收起按钮形态。
 - ❌ 不用任意值字号；不混超过 3 档字重。
+- ❌ 不用 `px/py` 拼出近似方形的 rail 图标位高亮；不给主题轨头像用 `rounded-full`。
 - ❌ 不做 tab 切换 entrance 渐入；不做 spring/bounce；不让侧栏多动画抢速度。
 - ❌ 不写营销/填充词；不给按钮起「确认/OK」这类无信息名。

@@ -234,12 +234,18 @@ export function RailNavLink({
       title={collapsed ? label : undefined}
       onClick={onClick}
       className={cn(
-        "relative flex min-h-11 items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors md:min-h-0",
+        "relative flex items-center gap-3 rounded-md text-sm font-medium transition-colors",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70",
         active
           ? "bg-rail-foreground/10 text-rail-foreground"
           : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
-        collapsed && "justify-center px-0",
+        // 高亮几何（design.md「高亮几何」）：折叠后只剩图标，着色面必须是正方形，
+        // 用 size-8 钉成 32×32（正好填满 48px 图标轨的 px-2 内宽）并水平居中。
+        // 展开态是整行长条，触屏命中区靠 min-h-11 撑到 44px。
+        // 注意：本包 cn() 是纯拼接、没有 tailwind-merge，两侧不得输出冲突的同族 class。
+        collapsed
+          ? "mx-auto size-8 justify-center"
+          : "min-h-11 px-3 py-2.5 md:min-h-0",
       )}
     >
       {icon}
@@ -354,7 +360,7 @@ export function RailUserBlock({
     >
       <span
         aria-hidden
-        className="flex size-9 shrink-0 items-center justify-center rounded-full bg-rail-foreground text-xs font-semibold text-rail ring-2 ring-rail-foreground/10"
+        className="flex size-9 shrink-0 items-center justify-center rounded-md bg-rail-foreground text-xs font-semibold text-rail ring-2 ring-rail-foreground/10"
       >
         {avatarLabel}
       </span>

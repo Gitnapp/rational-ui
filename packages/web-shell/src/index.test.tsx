@@ -94,6 +94,39 @@ describe("shared rail shell accessibility", () => {
     expect(toggle).toContain("hover:bg-rail-foreground/10");
     expect(`${link}${toggle}`).not.toContain("bg-white/");
   });
+
+  // design.md「高亮几何」：折叠后图标轨里的高亮只剩图标，必须是正方形着色面。
+  it("renders the collapsed rail highlight as a square colour surface", () => {
+    const collapsed = renderToStaticMarkup(
+      <RailNavLink active collapsed href="/users" icon={<span>U</span>} label="用户" />,
+    );
+
+    expect(collapsed).toContain("size-8");
+    // 44px 命中区高度只属于展开态；带进折叠态会让高亮退化成 32×44 长方形。
+    expect(collapsed).not.toContain("min-h-11");
+    // 本包 cn() 没有 tailwind-merge，冲突的 padding 会同时留在 class 里。
+    expect(collapsed).not.toContain("py-2.5");
+    expect(collapsed).not.toContain("px-3");
+  });
+
+  it("keeps the expanded rail entry a full-width row with a 44px touch target", () => {
+    const expanded = renderToStaticMarkup(
+      <RailNavLink active collapsed={false} href="/users" icon={<span>U</span>} label="用户" />,
+    );
+
+    expect(expanded).toContain("min-h-11");
+    expect(expanded).toContain("px-3");
+    expect(expanded).not.toContain("size-8");
+  });
+
+  it("renders the rail user avatar as a square, not a circle", () => {
+    const markup = renderToStaticMarkup(
+      <RailUserBlock collapsed={false} logout={<span>退出</span>} name="张三" />,
+    );
+
+    expect(markup).toContain("size-9");
+    expect(markup).not.toContain("rounded-full");
+  });
 });
 
 describe("shared rail account block", () => {
