@@ -244,11 +244,12 @@ export function RailNavLink({
           : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
         // 高亮几何（design.md「高亮几何」）：折叠后只剩图标，着色面必须是正方形，
         // 用 size-8 钉成 32×32（正好填满 48px 图标轨的 px-2 内宽）并水平居中。
-        // 展开态是整行长条，触屏命中区靠 min-h-11 撑到 44px。
+        // 展开态是整行长条，桌面高度与折叠态一致（32px = design.md 紧凑控件），
+        // 触屏命中区仍靠 min-h-11 撑到 44px。
         // 注意：本包 cn() 是纯拼接、没有 tailwind-merge，两侧不得输出冲突的同族 class。
         collapsed
           ? "mx-auto size-8 justify-center"
-          : "min-h-11 px-3 py-2.5 md:min-h-0",
+          : "min-h-11 px-3 py-2.5 md:min-h-8 md:py-1.5",
       )}
     >
       {icon}
