@@ -6,6 +6,10 @@
 import Link from "next/link";
 import React, { useEffect, useRef, type MouseEvent, type ReactNode } from "react";
 
+import { buttonVariants } from "./button";
+
+export { Button, buttonVariants } from "./button";
+
 export function cn(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
 }
@@ -15,10 +19,9 @@ const RAIL_EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
 // 统一 Casdoor 登录提示页骨架（issue #515）。视觉基准 = User Portal `/login`：
 // 居中低噪音背景 + 卡片 + 图标 + 应用名旁 Info tooltip + 全宽主按钮。
 // 本组件不含任何认证逻辑或客户端 token，只渲染提示并指向各 app 自己的
-// `/api/auth/login`；按钮 class 逐字复刻 userportal shadcn Button(default,lg)，
-// 保证三端像素一致且不依赖各 app 各自的 Button 实现。
-const LOGIN_BUTTON_CLASS =
-  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-normal outline-none transition-[color,background-color,border-color,box-shadow,opacity,transform] duration-100 ease-out active:scale-[0.98] motion-reduce:transform-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-5";
+// `/api/auth/login`；主按钮直接取共享 Button 的 `default/lg` class，
+// 三端像素一致由同一真相源保证（见 ./button.tsx）。
+const LOGIN_BUTTON_CLASS = buttonVariants({ size: "lg" });
 
 export function CasdoorLoginPrompt({
   appName,
@@ -241,11 +244,12 @@ export function RailNavLink({
           : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
         // 高亮几何（design.md「高亮几何」）：折叠后只剩图标，着色面必须是正方形，
         // 用 size-8 钉成 32×32（正好填满 48px 图标轨的 px-2 内宽）并水平居中。
-        // 展开态是整行长条，触屏命中区靠 min-h-11 撑到 44px。
+        // 展开态是整行长条，桌面高度与折叠态一致（32px = design.md 紧凑控件），
+        // 触屏命中区仍靠 min-h-11 撑到 44px。
         // 注意：本包 cn() 是纯拼接、没有 tailwind-merge，两侧不得输出冲突的同族 class。
         collapsed
           ? "mx-auto size-8 justify-center"
-          : "min-h-11 px-3 py-2.5 md:min-h-0",
+          : "min-h-11 px-3 py-2.5 md:min-h-8 md:py-1.5",
       )}
     >
       {icon}
@@ -259,29 +263,41 @@ export type RailTab = {
   readonly href: string;
   readonly active: boolean;
   readonly onClick?: () => void;
+  /** 单 tab 功能区：渲染为不可点的当前位置 pill，而非导航链接（如 userportal）。 */
+  readonly static?: boolean;
 };
 
 // 顶栏功能 tab：主题面 pill，选中/hover 都从 rail foreground 派生。
 export function RailTabs({ tabs }: { readonly tabs: readonly RailTab[] }) {
   return (
     <nav aria-label="当前功能区标签" className="flex items-center gap-1">
-      {tabs.map((tab) => (
-        <Link
-          key={tab.href}
-          href={tab.href}
-          aria-current={tab.active ? "page" : undefined}
-          onClick={tab.onClick}
-          className={cn(
-            "rounded-md px-2.5 py-1 text-sm transition-colors",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70",
-            tab.active
-              ? "bg-rail-foreground/10 text-rail-foreground"
-              : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
-          )}
-        >
-          {tab.label}
-        </Link>
-      ))}
+      {tabs.map((tab) =>
+        tab.static ? (
+          <span
+            key={tab.label}
+            aria-current={tab.active ? "page" : undefined}
+            className="rounded-md bg-rail-foreground/10 px-2.5 py-1 text-sm text-rail-foreground"
+          >
+            {tab.label}
+          </span>
+        ) : (
+          <Link
+            key={tab.href}
+            href={tab.href}
+            aria-current={tab.active ? "page" : undefined}
+            onClick={tab.onClick}
+            className={cn(
+              "rounded-md px-2.5 py-1 text-sm transition-colors",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rail-foreground/70",
+              tab.active
+                ? "bg-rail-foreground/10 text-rail-foreground"
+                : "text-rail-foreground/60 hover:bg-rail-foreground/5 hover:text-rail-foreground",
+            )}
+          >
+            {tab.label}
+          </Link>
+        ),
+      )}
     </nav>
   );
 }
@@ -400,24 +416,35 @@ export function RailUserBlock({
   );
 }
 
-// 移动端顶栏（白色主区内）：菜单按钮 + 应用名 + 当前位置。
+// 移动端顶栏（白色主区内）：菜单按钮 + 应用名 + 当前位置 + 当前功能区的子页 tab。
+// 桌面顶栏（RailShell 的 `hidden md:flex` header）在移动端不渲染，因此二级 tab 必须
+// 在这里给出等价入口，否则移动端只能切功能区、无法切当前功能区内的子页。
 export function RailMobileHeader({
   title,
   currentLabel,
   onOpen,
   menuIcon,
+  menuLabel = "打开侧边栏",
+  tabs,
+  trailing,
 }: {
   readonly title: string;
   readonly currentLabel?: string;
   readonly onOpen: () => void;
   readonly menuIcon: ReactNode;
+  /** 抽屉入口的可访问名称；各 app 的抽屉语义不同（侧边栏 / 导航菜单）。 */
+  readonly menuLabel?: string;
+  /** 当前功能区的子页 tab；<=1 个时不渲染 tab 行（无可切换目标）。 */
+  readonly tabs?: readonly RailTab[];
+  /** 右侧可选动作（如 content-factory 的任务历史入口），占位保持标题居中。 */
+  readonly trailing?: ReactNode;
 }) {
   return (
     <header className="bg-card px-4 py-2 md:hidden">
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
-          aria-label="打开侧边栏"
+          aria-label={menuLabel}
           onClick={onOpen}
           className="inline-flex size-10 items-center justify-center rounded-md border text-foreground transition-colors hover:border-foreground/20 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
@@ -427,9 +454,40 @@ export function RailMobileHeader({
           <p className="text-sm font-semibold text-foreground">{title}</p>
           <p className="text-xs text-muted-foreground">{currentLabel ?? title}</p>
         </div>
-        <span aria-hidden className="size-10" />
+        {trailing ?? <span aria-hidden className="size-10" />}
       </div>
+      {tabs && tabs.length > 1 ? <RailMobileTabs tabs={tabs} /> : null}
     </header>
+  );
+}
+
+// 移动端子页 tab 行：位于白色主区顶栏内，因此配色取 card 面而非主题轨。
+// 横向可滚动以容纳较多 tab；命中区按 design.md「无障碍」在 coarse pointer 下 ≥44px。
+function RailMobileTabs({ tabs }: { readonly tabs: readonly RailTab[] }) {
+  return (
+    <nav
+      aria-label="当前功能区标签"
+      data-testid="rail-mobile-tabs"
+      className="no-scrollbar -mx-1 mt-2 flex items-center gap-1 overflow-x-auto px-1"
+    >
+      {tabs.map((tab) => (
+        <Link
+          key={tab.href}
+          href={tab.href}
+          aria-current={tab.active ? "page" : undefined}
+          onClick={tab.onClick}
+          className={cn(
+            "inline-flex min-h-11 shrink-0 items-center rounded-md px-3 text-sm transition-colors",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            tab.active
+              ? "bg-muted font-medium text-foreground"
+              : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+          )}
+        >
+          {tab.label}
+        </Link>
+      ))}
+    </nav>
   );
 }
 

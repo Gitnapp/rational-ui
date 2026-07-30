@@ -187,6 +187,15 @@ textarea {
   [data-slot="button"][data-size^="icon"] {
     min-width: 2.75rem;
   }
+
+  /* iOS Safari 在聚焦 font-size < 16px 的表单控件时会自动放大视口（模态框 zoom-in）。
+     桌面保持紧凑密度不变；触屏/小屏下把文字类输入统一抬到 16px，从源头消除聚焦缩放，
+     不通过 `user-scalable=no` 牺牲 a11y。checkbox/radio 不受此规则影响。 */
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    font-size: 1rem;
+  }
 }
 
 @keyframes gds-accessible-fade-in {
