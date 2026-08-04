@@ -376,7 +376,7 @@ export function RailUserBlock({
     >
       <span
         aria-hidden
-        className="flex size-9 shrink-0 items-center justify-center rounded-md bg-rail-foreground text-xs font-semibold text-rail ring-2 ring-rail-foreground/10"
+        className="flex size-8 shrink-0 items-center justify-center rounded-md bg-rail-foreground text-micro font-semibold text-rail ring-1 ring-rail-foreground/10"
       >
         {avatarLabel}
       </span>

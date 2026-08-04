@@ -179,7 +179,9 @@ describe("shared rail shell accessibility", () => {
       <RailUserBlock collapsed={false} logout={<span>退出</span>} name="张三" />,
     );
 
-    expect(markup).toContain("size-9");
+    expect(markup).toContain("size-8");
+    expect(markup).toContain("text-micro");
+    expect(markup).toContain("ring-1");
     expect(markup).not.toContain("rounded-full");
   });
 });
