@@ -113,7 +113,7 @@ function LoginInfoHint({ label }: { readonly label: string }) {
         </svg>
       </button>
       <span
-        className="pointer-events-none absolute left-1/2 top-full z-50 mt-1.5 hidden w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-md border bg-popover px-3 py-2 text-xs leading-5 text-popover-foreground shadow-md group-hover:block group-focus-within:block"
+        className="pointer-events-none absolute left-1/2 top-full z-50 mt-1.5 hidden w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-md border bg-popover px-3 py-2 text-xs leading-5 text-popover-foreground shadow-overlay group-hover:block group-focus-within:block"
         role="tooltip"
       >
         {label}
