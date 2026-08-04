@@ -5,6 +5,10 @@ export const REQUIRED_WEB_SHELL_UTILITIES = Object.freeze([
   String.raw`.md\:block`,
   String.raw`.border-rail-foreground\/10`,
   String.raw`.hover\:bg-rail-foreground\/10`,
+  // Token-backed utility from @garage/design-tokens. If a consumer stops
+  // importing the token package, this resolves to nothing and the shell's
+  // floating layers silently lose their elevation instead of failing.
+  String.raw`.shadow-overlay`,
 ]);
 
 async function collectCssFiles(directory) {

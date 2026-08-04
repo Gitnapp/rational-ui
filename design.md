@@ -282,6 +282,13 @@ Geist Sans 承载 UI 与正文，Geist Mono 承载代码/数据/需对齐的数�
 不混圆角与直角。composer 用 1.5rem 大圆角，带文字的 pill chip / badge 用 full；
 rail 图标位高亮与主题轨头像是正方形 + `rounded-md`（见 高亮几何）。
 
+**浮层高度只有一档**：popover / dropdown / select / 选择器菜单 / 悬浮工具条 / toast
+统一用 `shadow-overlay`（token `--overlay-shadow`），大扩散、低不透明，靠柔和衰减表达
+抬升，不用 Tailwind 默认的 `shadow-md`/`shadow-lg`（短模糊 + 高不透明，在单色浅底上
+显重）。浅色 `0 6px 24px -8px / 12%`；深色因 `popover` 与 `card` 同亮度、没有色调差可
+依赖，改用 `0 8px 28px -8px / 55%` 由阴影独立承担分离。带遮罩的 dialog / sheet 不属于
+本档——遮罩已经完成分离，沿用各自的模态阴影。
+
 ## 动效
 
 **动效只为澄清状态变化，绝不装饰。** 统一 tween，禁止 spring/bounce，尊重 reduced-motion

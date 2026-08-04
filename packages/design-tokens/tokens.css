@@ -29,6 +29,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --shadow-overlay: var(--overlay-shadow);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -57,6 +58,8 @@
 
 :root {
   color-scheme: light;
+  /* 浮层高度：大扩散低不透明，靠柔和衰减而不是深压边表达抬升（design.md 阴影克制）。 */
+  --overlay-shadow: 0 6px 24px -8px rgb(0 0 0 / 0.12), 0 1px 2px rgb(0 0 0 / 0.04);
   /* Soft neutral page with white elevated surfaces so cards/composer pop. */
   --background: oklch(0.971 0 0);
   --foreground: oklch(0.16 0 0);
@@ -95,6 +98,8 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
+    /* 深色下 popover 与 card 同亮度，抬升只能由阴影承担，故比浅色更实。 */
+    --overlay-shadow: 0 8px 28px -8px rgb(0 0 0 / 0.55), 0 1px 2px rgb(0 0 0 / 0.35);
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
     --card: oklch(0.205 0 0);
@@ -124,6 +129,8 @@
    light choice override a dark OS preference. */
 :root[data-theme="dark"] {
   color-scheme: dark;
+  /* 深色下 popover 与 card 同亮度，抬升只能由阴影承担，故比浅色更实。 */
+  --overlay-shadow: 0 8px 28px -8px rgb(0 0 0 / 0.55), 0 1px 2px rgb(0 0 0 / 0.35);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
