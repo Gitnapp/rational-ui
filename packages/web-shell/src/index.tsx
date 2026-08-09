@@ -440,21 +440,25 @@ export function RailMobileHeader({
   readonly trailing?: ReactNode;
 }) {
   return (
-    <header className="bg-card px-4 py-2 md:hidden">
+    <header className="bg-card px-4 py-2 md:hidden" data-slot="rail-mobile-header">
       <div className="flex items-center justify-between gap-3">
         <button
           type="button"
           aria-label={menuLabel}
           onClick={onOpen}
-          className="inline-flex size-10 items-center justify-center rounded-md border text-foreground transition-colors hover:border-foreground/20 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="inline-flex size-11 shrink-0 items-center justify-center rounded-md border text-foreground transition-colors hover:border-foreground/20 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           {menuIcon}
         </button>
-        <div className="flex-1 text-center">
-          <p className="text-sm font-semibold text-foreground">{title}</p>
-          <p className="text-xs text-muted-foreground">{currentLabel ?? title}</p>
+        <div className="min-w-0 flex-1 text-center">
+          <p className="truncate text-sm font-semibold text-foreground">{title}</p>
+          <p className="truncate text-xs text-muted-foreground">{currentLabel ?? title}</p>
         </div>
-        {trailing ?? <span aria-hidden className="size-10" />}
+        {trailing ? (
+          <span className="flex size-11 shrink-0 items-center justify-center">{trailing}</span>
+        ) : (
+          <span aria-hidden className="size-11 shrink-0" />
+        )}
       </div>
       {tabs && tabs.length > 1 ? <RailMobileTabs tabs={tabs} /> : null}
     </header>

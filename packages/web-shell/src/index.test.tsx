@@ -110,7 +110,8 @@ describe("shared rail shell accessibility", () => {
     expect(markup).toContain('aria-label="打开侧边栏"');
     // 单 tab（或无 tab）不渲染移动端 tab 行：没有可切换目标。
     expect(markup).not.toContain('data-testid="rail-mobile-tabs"');
-    expect(markup).toContain('class="size-10"');
+    expect(markup).toContain('class="size-11 shrink-0"');
+    expect(markup).toContain('class="min-w-0 flex-1 text-center"');
   });
 
   it("does not expose a closed drawer in server output", () => {
