@@ -177,7 +177,12 @@ describe("shared rail shell accessibility", () => {
 
   it("renders the rail user avatar as a square, not a circle", () => {
     const markup = renderToStaticMarkup(
-      <RailUserBlock collapsed={false} logout={<span>退出</span>} name="张三" />,
+      <RailUserBlock
+        collapsed={false}
+        logoutHref="/api/auth/logout"
+        logoutIcon={<span>退出</span>}
+        name="张三"
+      />,
     );
 
     expect(markup).toContain("size-8");
