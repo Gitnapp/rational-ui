@@ -10,6 +10,7 @@ Garage Web 产品的独立设计系统仓库。设计语义、共享 CSS token �
 - [`packages/web-shell`](./packages/web-shell)：`@garage/web-shell`，React/Next.js 应用外壳（Rail 导航）与登录提示；共享 `Button` 已收敛进 `@garage/ui`。
 - [`apps/gallery`](./apps/gallery)：`@garage/gallery`，交互式组件展示台——渲染 `@garage/ui` 全部控件及其变体，本地跑 `pnpm dev` 查看。
 - [`docs/engineering/design-system.md`](./docs/engineering/design-system.md)：分层与消费方接入规则。
+- [`docs/engineering/roadmap.md`](./docs/engineering/roadmap.md)：未闭环的缺口、待定决策与明确不做的事。
 
 ## 开发
 
