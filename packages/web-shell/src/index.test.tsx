@@ -171,8 +171,65 @@ describe("shared rail shell accessibility", () => {
     );
 
     expect(expanded).toContain("min-h-11");
-    expect(expanded).toContain("px-3");
+    expect(expanded).toContain("px-2");
     expect(expanded).not.toContain("size-8");
+  });
+
+  // design.md「应用外壳」：「图标位置在展开/折叠间不横向跳动」。
+  //
+  // 图标的水平位置 = nav 容器 padding + 链接 padding。折叠态图标居中于 size-8
+  // 方块，等效 padding = (32 - 16) / 2 = 8px，所以展开态也必须是 8px（px-2），
+  // 且 nav 两态 padding 必须一致——否则切换瞬间图标横跳。
+  //
+  // 同时禁止 mx-auto：auto margin 按「正在 300ms 动画中的」轨宽实时计算，折叠
+  // 瞬间会把图标甩到宽轨中点再一路滑回来。实测单帧位移 98px，是最刺眼的闪动源。
+  it("pins the rail icon to the same horizontal offset in both states", () => {
+    const collapsed = renderToStaticMarkup(
+      <RailNavLink active collapsed href="/users" icon={<span>U</span>} label="用户" />,
+    );
+    const expanded = renderToStaticMarkup(
+      <RailNavLink active collapsed={false} href="/users" icon={<span>U</span>} label="用户" />,
+    );
+
+    // auto margin 依赖动画中的容器宽度，任何一态都不得使用。
+    expect(collapsed).not.toContain("mx-auto");
+    expect(expanded).not.toContain("mx-auto");
+
+    // 折叠态：32px 方块 + 居中图标 ⇒ 等效水平内边距 8px。
+    expect(collapsed).toContain("size-8");
+    expect(collapsed).toContain("justify-center");
+    // 展开态：显式 8px 内边距，与折叠态等效值对齐。
+    expect(expanded).toContain("px-2");
+    expect(expanded).not.toContain("px-3");
+  });
+
+  it("keeps the rail nav container padding identical across collapse states", () => {
+    const render = (collapsed: boolean) =>
+      renderToStaticMarkup(
+        <RailSidebar
+          brand={<span>Garage</span>}
+          collapsed={collapsed}
+          nav={
+            <RailNavLink
+              active
+              collapsed={collapsed}
+              href="/users"
+              icon={<span>U</span>}
+              label="用户"
+            />
+          }
+        />,
+      );
+
+    const navClass = (markup: string) =>
+      /<nav[^>]*class="([^"]*)"/.exec(markup)?.[1] ?? "";
+
+    const collapsedNav = navClass(render(true));
+    const expandedNav = navClass(render(false));
+
+    expect(collapsedNav).not.toBe("");
+    // nav 的水平 padding 是图标位置的一部分，两态不一致就会造成横向跳动。
+    expect(collapsedNav).toBe(expandedNav);
   });
 
   it("renders the rail user avatar as a square, not a circle", () => {

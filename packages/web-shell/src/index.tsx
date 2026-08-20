@@ -169,13 +169,11 @@ export function RailSidebar({
         collapsed ? "w-12" : "w-[260px]",
       )}
     >
-      <div className={cn("flex h-12 shrink-0 items-center", collapsed ? "px-2.5" : "px-3")}>
-        {brand}
-      </div>
-      <nav
-        aria-label="功能区"
-        className={cn("flex-1 space-y-1 overflow-y-auto py-2", collapsed ? "px-2" : "px-3")}
-      >
+      {/* 水平内边距在两态之间保持不变（design.md「图标位置在展开/折叠间不横向跳动」）：
+          宽度是唯一被动画的量，任何跟着 collapsed 切换的水平 padding 都会让图标
+          在切换瞬间横跳。品牌徽章 size-7 配 px-2.5 ⇒ 中心 24px，与 nav 图标列对齐。 */}
+      <div className="flex h-12 shrink-0 items-center px-2.5">{brand}</div>
+      <nav aria-label="功能区" className="flex-1 space-y-1 overflow-y-auto px-2 py-2">
         {nav}
       </nav>
       {footer ? <div className={cn("pb-3", collapsed ? "px-1.5" : "px-3")}>{footer}</div> : null}
@@ -247,9 +245,15 @@ export function RailNavLink({
         // 展开态是整行长条，桌面高度与折叠态一致（32px = design.md 紧凑控件），
         // 触屏命中区仍靠 min-h-11 撑到 44px。
         // 注意：本包 cn() 是纯拼接、没有 tailwind-merge，两侧不得输出冲突的同族 class。
+        //
+        // 两态水平内边距必须等效（design.md「图标位置在展开/折叠间不横向跳动」）：
+        // 折叠态图标居中于 32px 方块 ⇒ 等效 8px，展开态即 px-2。
+        // 绝不能用 mx-auto：auto margin 按「正在 300ms 动画中的」轨宽实时求值，
+        // 折叠瞬间会把图标甩到宽轨中点再滑回来（实测单帧 98px 的可见闪动）。
+        // size-8 已等于折叠态 nav 的内宽，本就贴合左缘，无需 auto margin 居中。
         collapsed
-          ? "mx-auto size-8 justify-center"
-          : "min-h-11 px-3 py-2.5 md:min-h-8 md:py-1.5",
+          ? "size-8 justify-center"
+          : "min-h-11 px-2 py-2.5 md:min-h-8 md:py-1.5",
       )}
     >
       {icon}
