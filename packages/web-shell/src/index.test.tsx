@@ -4,6 +4,8 @@ import { describe, expect, it } from "vitest";
 
 import {
   CasdoorLoginPrompt,
+  RailAppSwitcher,
+  RailBrand,
   RailCollapseButton,
   RailMobileDrawer,
   RailMobileHeader,
@@ -11,6 +13,7 @@ import {
   RailSidebar,
   RailTabs,
   RailUserBlock,
+  type RailApp,
 } from "./index";
 
 describe("shared rail shell accessibility", () => {
@@ -246,6 +249,69 @@ describe("shared rail shell accessibility", () => {
     expect(markup).toContain("text-micro");
     expect(markup).toContain("ring-1");
     expect(markup).not.toContain("rounded-full");
+  });
+});
+
+describe("shared rail app switcher", () => {
+  const apps: readonly RailApp[] = [
+    { id: "cf", name: "Content Factory", href: "/cf", icon: <span>C</span>, description: "内容生产" },
+    { id: "nav", name: "Navigator", href: "/nav", icon: <span>N</span> },
+  ];
+  const baseProps = { apps, chevronIcon: <span>⌄</span>, currentAppId: "cf" };
+
+  it("reuses the RailBrand badge geometry so the two brand forms stay pixel-identical", () => {
+    const brand = renderToStaticMarkup(
+      <RailBrand collapsed={false} icon={<span>C</span>} title="Content Factory" />,
+    );
+    const switcher = renderToStaticMarkup(
+      <RailAppSwitcher {...baseProps} collapsed={false} />,
+    );
+
+    // design.md「品牌区」：切换器内部复用 RailBrand，徽章/标题规格不得分叉。
+    expect(switcher).toContain("size-7");
+    expect(switcher).toContain("bg-card");
+    expect(switcher).toContain("text-rail-foreground/85");
+    expect(brand).toContain("size-7");
+    // 两者渲染同一段品牌标记。
+    expect(switcher).toContain("Content Factory");
+  });
+
+  it("shows the current app and hides the chevron when collapsed", () => {
+    const expanded = renderToStaticMarkup(<RailAppSwitcher {...baseProps} collapsed={false} />);
+    const collapsed = renderToStaticMarkup(<RailAppSwitcher {...baseProps} collapsed />);
+
+    expect(expanded).toContain("Content Factory");
+    expect(expanded).toContain("⌄");
+    // 折叠态只剩徽章：标题与指示图标都不渲染，着色面才能保持正方形。
+    expect(collapsed).not.toContain("⌄");
+    expect(collapsed).toContain('title="Content Factory"');
+    expect(collapsed).toContain('aria-label="Content Factory：切换应用"');
+  });
+
+  // design.md「品牌区」：徽章水平中心固定 24px，折叠切换时不得横向位移。
+  // 容器内边距 10px + 触发器 -mx-1/px-1 ⇒ 徽章仍落在 x=10，且着色面 36×36 为正方形。
+  it("keeps the trigger colour surface square and the badge horizontally pinned", () => {
+    const collapsed = renderToStaticMarkup(<RailAppSwitcher {...baseProps} collapsed />);
+
+    expect(collapsed).toContain("-mx-1");
+    expect(collapsed).toContain("px-1");
+    expect(collapsed).toContain("py-1");
+    // 折叠态不得出现只作用于展开态的宽度类，否则着色面退化成长方形。
+    expect(collapsed).not.toContain("w-full");
+  });
+
+  it("falls back to the first app when currentAppId does not match", () => {
+    const markup = renderToStaticMarkup(
+      <RailAppSwitcher {...baseProps} collapsed={false} currentAppId="does-not-exist" />,
+    );
+
+    expect(markup).toContain("Content Factory");
+  });
+
+  it("renders nothing rather than crashing on an empty app list", () => {
+    expect(
+      renderToStaticMarkup(<RailAppSwitcher {...baseProps} apps={[]} collapsed={false} />),
+    ).toBe("");
   });
 });
 

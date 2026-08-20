@@ -189,9 +189,18 @@ indicator、图标轨入口、icon-only 控件的 hover 面、主题轨用户区
   `48px` 图标轨，品牌与入口只留图标，图标位置在展开/折叠间不横向跳动。禁止各 app 自造收起
   按钮形态（如 navigator 的侧栏底部整行按钮）。
 - **品牌区（logo + 标题）**：样式真相源是 content-factory 的 `ContentFactoryBrand`——
-  `size-7` 圆角细边 `bg-card` 徽章（icon 16px）+ `text-sm font-normal` 85% 标题；**不可点击**。
+  `size-7` 圆角细边 `bg-card` 徽章（icon 16px）+ `text-sm font-normal` 85% 标题。
   主题轨上徽章保持 `bg-card`，标题色用 `--rail-foreground/85`。三端（content-factory /
   navigator / userportal）统一引用此规格，不各自改造字号、字重或徽章几何。
+  品牌区有且只有两种形态，都由 `packages/web-shell` 渲染，不得各自另造：
+  - `RailBrand`——**不可点击**的纯标识，用于不提供跨产品跳转的场景。
+  - `RailAppSwitcher`——**应用切换器**：品牌区的唯一合法可交互形态，用于在共用本外壳的
+    产品之间跳转。徽章与标题规格与 `RailBrand` 完全一致（内部即复用它），只在展开态标题右侧
+    多一个指示图标，hover/展开态着色面取 `bg-rail-foreground/5` 与 `/10`。
+    折叠态只剩徽章，着色面必须是正方形（见 高亮几何）且左右内缩对称；徽章水平中心固定
+    `24px`，与下方 nav 图标列对齐——切换折叠状态时品牌徽章不得横向位移。
+    下拉浮层位于 popover 面而非主题轨，配色改用 `popover` / `muted` token；当前项以
+    `aria-current="page"` 标记。
 - **主题轨底部 = 用户区**：头像（首字母 `size-9` 正方形着色面，`bg-rail-foreground`）+ 名称
   （可带说明文字或链接）+ 退出动作；折叠态只留头像。整块由 `RailUserBlock` 统一渲染：
   退出的图标按钮几何、

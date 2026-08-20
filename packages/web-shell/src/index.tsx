@@ -6,6 +6,14 @@
 import Link from "next/link";
 import React, { useEffect, useRef, type MouseEvent, type ReactNode } from "react";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@garage/ui/components/ui/dropdown-menu";
+
 import { buttonVariants } from "./button";
 
 export { Button, buttonVariants } from "./button";
@@ -182,6 +190,11 @@ export function RailSidebar({
 }
 
 // 品牌区（logo + 标题）：不可点击，几何/字号与 content-factory 的 ContentFactoryBrand 一致。
+// 品牌徽章几何的唯一真相源（design.md「品牌区」：size-7 圆角细边 bg-card 徽章）。
+// RailBrand 与 RailAppSwitcher 的下拉项共用，避免两处各写一份 class 字面量。
+const BRAND_BADGE_CLASS =
+  "grid size-7 shrink-0 place-items-center rounded-md border bg-card text-foreground/80 shadow-xs";
+
 export function RailBrand({
   icon,
   title,
@@ -196,9 +209,7 @@ export function RailBrand({
 }) {
   return (
     <span className="flex min-w-0 items-center gap-2">
-      <span className="grid size-7 shrink-0 place-items-center rounded-md border bg-card text-foreground/80 shadow-xs">
-        {icon}
-      </span>
+      <span className={BRAND_BADGE_CLASS}>{icon}</span>
       {!collapsed && (
         <span
           className={cn(
@@ -210,6 +221,97 @@ export function RailBrand({
         </span>
       )}
     </span>
+  );
+}
+
+export type RailApp = {
+  readonly id: string;
+  readonly name: string;
+  readonly href: string;
+  /** 由消费方注入自己的 icon family（design.md「图标」），本包不绑定图标库。 */
+  readonly icon: ReactNode;
+  readonly description?: string;
+};
+
+// 应用切换器：品牌区的可交互变体，用于在共用本外壳的产品之间跳转。
+// 视觉完全复用 RailBrand（同一 size-7 徽章 + text-sm 标题），只多一个 chevron
+// 与 hover/open 着色面，因此与不可点击的 RailBrand 在同一位置像素一致。
+//
+// 几何：品牌容器内边距 10px，触发器用 -mx-1 px-1 把着色面向外扩 4px——
+// 徽章仍落在 x=10（中心 24px，与下方 nav 图标列对齐），折叠态着色面 36×36
+// 是正方形且左右内缩对称（design.md「高亮几何」）。
+export function RailAppSwitcher({
+  apps,
+  currentAppId,
+  collapsed,
+  chevronIcon,
+  label = "切换应用",
+}: {
+  readonly apps: readonly RailApp[];
+  readonly currentAppId: string;
+  readonly collapsed: boolean;
+  /** 展开态标题右侧的指示图标，由 app 注入。 */
+  readonly chevronIcon: ReactNode;
+  readonly label?: string;
+}) {
+  const current = apps.find((app) => app.id === currentAppId) ?? apps[0];
+  if (!current) return null;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          aria-label={collapsed ? `${current.name}：${label}` : undefined}
+          title={collapsed ? current.name : undefined}
+          className={cn(
+            "-mx-1 flex items-center rounded-md px-1 py-1 outline-none transition-colors",
+            "hover:bg-rail-foreground/5 focus-visible:ring-2 focus-visible:ring-rail-foreground/70",
+            "data-[state=open]:bg-rail-foreground/10",
+            collapsed ? "justify-center" : "w-full gap-2",
+          )}
+        >
+          <span className="min-w-0 flex-1 text-left">
+            <RailBrand collapsed={collapsed} icon={current.icon} title={current.name} />
+          </span>
+          {!collapsed && (
+            <span className="shrink-0 text-rail-foreground/50">{chevronIcon}</span>
+          )}
+        </button>
+      </DropdownMenuTrigger>
+      {/* 下拉浮层在 popover 面而非主题轨上，配色改用 popover/muted token。 */}
+      <DropdownMenuContent align="start" className="w-64" sideOffset={8}>
+        <DropdownMenuLabel className="text-micro font-normal text-muted-foreground">
+          {label}
+        </DropdownMenuLabel>
+        {apps.map((app) => {
+          const isCurrent = app.id === current.id;
+          return (
+            <DropdownMenuItem asChild key={app.id}>
+              <Link
+                aria-current={isCurrent ? "page" : undefined}
+                className="flex items-center gap-2"
+                href={app.href}
+              >
+                <span className={BRAND_BADGE_CLASS}>{app.icon}</span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm">{app.name}</span>
+                  {app.description ? (
+                    <span className="block truncate text-micro text-muted-foreground">
+                      {app.description}
+                    </span>
+                  ) : null}
+                </span>
+                {/* 当前项用文字而非勾选图标标记：本包不绑定图标库。 */}
+                {isCurrent ? (
+                  <span className="shrink-0 text-micro text-muted-foreground">当前</span>
+                ) : null}
+              </Link>
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

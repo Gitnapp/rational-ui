@@ -2,32 +2,69 @@
 
 // The gallery is a Garage app like content-factory/navigator/userportal, so it
 // dogfoods the real shared shell (design.md「应用外壳」) instead of a bespoke
-// sidebar: RailShell/RailSidebar/RailBrand/RailNavLink/RailCollapseButton/
+// sidebar: RailShell/RailSidebar/RailAppSwitcher/RailNavLink/RailCollapseButton/
 // RailMobileHeader/RailMobileDrawer all come from @garage/web-shell.
 import {
   Bell,
   Blocks,
+  ChevronsUpDown,
   Compass,
+  Factory,
   LayoutGrid,
   Layers,
   Menu,
   PanelLeft,
   TextCursorInput,
+  UserRound,
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import {
-  RailBrand,
+  RailAppSwitcher,
   RailCollapseButton,
   RailMobileDrawer,
   RailMobileHeader,
   RailNavLink,
   RailShell,
   RailSidebar,
+  type RailApp,
 } from "@garage/web-shell";
 
 import { NAV_GROUPS, type NavGroupId } from "./nav-data";
+
+// 共用本外壳的 Garage 产品。href 暂为占位：三端仍在 GarageDev1/infrastructure，
+// 本仓库抽出后尚未打通消费路径（见 docs/engineering/roadmap.md §0）。
+const APPS: readonly RailApp[] = [
+  {
+    id: "design-system",
+    name: "Design System",
+    href: "/",
+    icon: <Blocks className="size-4" />,
+    description: "组件与设计语义",
+  },
+  {
+    id: "content-factory",
+    name: "Content Factory",
+    href: "#",
+    icon: <Factory className="size-4" />,
+    description: "内容生产工作台",
+  },
+  {
+    id: "navigator",
+    name: "Navigator",
+    href: "#",
+    icon: <Compass className="size-4" />,
+    description: "任务与日报",
+  },
+  {
+    id: "userportal",
+    name: "User Portal",
+    href: "#",
+    icon: <UserRound className="size-4" />,
+    description: "账号与权限",
+  },
+];
 
 const GROUP_ICONS: Record<NavGroupId, ReactNode> = {
   inputs: <TextCursorInput className="size-4" />,
@@ -122,7 +159,14 @@ export function GallerySidebarShell({ children }: { readonly children: ReactNode
         sidebar={
           <RailSidebar
             collapsed={collapsed}
-            brand={<RailBrand icon={<Blocks className="size-4" />} title="Garage" collapsed={collapsed} />}
+            brand={
+              <RailAppSwitcher
+                apps={APPS}
+                chevronIcon={<ChevronsUpDown className="size-3.5" />}
+                collapsed={collapsed}
+                currentAppId="design-system"
+              />
+            }
             nav={<GroupNav collapsed={collapsed} activeGroupId={activeGroupId} />}
           />
         }
@@ -149,7 +193,12 @@ export function GallerySidebarShell({ children }: { readonly children: ReactNode
         <RailMobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} closeIcon={<X className="size-4" />}>
           <div className="flex h-full flex-col">
             <div className="flex h-12 shrink-0 items-center px-3">
-              <RailBrand icon={<Blocks className="size-4" />} title="Garage" />
+              <RailAppSwitcher
+                apps={APPS}
+                chevronIcon={<ChevronsUpDown className="size-3.5" />}
+                collapsed={false}
+                currentAppId="design-system"
+              />
             </div>
             <nav aria-label="功能区" className="flex-1 space-y-1 overflow-y-auto px-3 py-2">
               <GroupNav collapsed={false} activeGroupId={activeGroupId} onNavigate={() => setMobileOpen(false)} />
