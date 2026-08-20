@@ -12,5 +12,14 @@
 
 - `design.md` 是视觉与交互语义的唯一真相源。
 - `packages/design-tokens` 只维护跨产品共享的 CSS token 和基础样式。
-- `packages/web-shell` 只维护跨产品共享的外壳与基础交互组件。
-- 业务页面、业务状态和应用私有的 shadcn 组件不进入本仓库。
+- `packages/ui`（`@garage/ui`）是标准 shadcn 组件库：全部组件源码由 `shadcn` CLI 生成
+  （`components.json` 见该目录），只做design.md 要求的最小定制（如 `button.tsx` 的紧凑尺寸
+  与按压反馈），不引入业务状态。新增/更新组件用 `pnpm dlx shadcn@latest add <name> -y -o`，
+  CLI 生成的内部 import 是 `@/...` 别名，本包不接 bundler 别名解析（供其它包以源码方式直接
+  typecheck），生成后需手动把 `@/lib/utils`、`@/components/ui/*` 换成相对路径。
+- `packages/web-shell` 只维护跨产品共享的外壳（RailShell 等）；`Button` 已收敛进
+  `@garage/ui`，`web-shell` 的 `button.tsx` 只做转出。
+- `apps/gallery`（`@garage/gallery`）是 `@garage/ui` 的交互式展示台，用于视觉验收与开发预览，
+  不承载业务逻辑。
+- 业务页面、业务状态与应用私有状态不进入本仓库；但通用、无业务语义的 shadcn 组件属于
+  `packages/ui`，是本仓库的核心交付物之一。

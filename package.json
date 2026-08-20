@@ -7,7 +7,8 @@
     "node": ">=24"
   },
   "scripts": {
-    "typecheck": "pnpm --filter @garage/web-shell typecheck",
+    "dev": "pnpm --filter @garage/gallery dev",
+    "typecheck": "pnpm -r --if-present run typecheck",
     "test": "pnpm --filter @garage/web-shell test",
     "check": "pnpm typecheck && pnpm test"
   }

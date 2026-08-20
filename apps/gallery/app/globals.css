@@ -1,0 +1,17 @@
+@import "tailwindcss" source("../");
+@import "@garage/design-tokens";
+
+@source "../../../packages/ui/src";
+@source "../../../packages/web-shell/src";
+
+/*
+ * This app renders RailShell full-page via `fixed inset-0` (see app-shell.tsx),
+ * so it's out of normal document flow — this is just a defensive backstop
+ * against a second, outer scrollbar. Shared tokens.css deliberately leaves
+ * body at `min-height: 100%` (no cap) for non-shell pages like
+ * CasdoorLoginPrompt — this override is app-private layout, not shared
+ * semantics (docs/engineering/design-system.md「分层」).
+ */
+body {
+  overflow: hidden;
+}
