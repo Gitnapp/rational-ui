@@ -4,7 +4,11 @@ import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 
 export function TextareaSection() {
   return (
-    <ShowcaseSection id="textarea" title="Textarea" description="Multi-line text input, sizes to content.">
+    <ShowcaseSection
+      id="textarea"
+      title="Textarea"
+      description="Multi-line text input, sizes to content."
+    >
       <VariantRow>
         <Variant label="default">
           <Textarea placeholder="Type your message here." />

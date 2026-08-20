@@ -4,7 +4,11 @@ import { ShowcaseSection, Stack } from "../showcase";
 
 export function SkeletonSection() {
   return (
-    <ShowcaseSection id="skeleton" title="Skeleton" description="Loading placeholder for content that hasn't arrived yet.">
+    <ShowcaseSection
+      id="skeleton"
+      title="Skeleton"
+      description="Loading placeholder for content that hasn't arrived yet."
+    >
       <Stack>
         <div className="flex items-center gap-3">
           <Skeleton className="size-10 rounded-full" />

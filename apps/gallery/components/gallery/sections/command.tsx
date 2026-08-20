@@ -1,5 +1,3 @@
-import { CalculatorIcon, CalendarIcon, SettingsIcon, SmileIcon, UserIcon } from "lucide-react";
-
 import {
   Command,
   CommandEmpty,
@@ -10,6 +8,7 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@garage/ui/components/ui/command";
+import { CalculatorIcon, CalendarIcon, SettingsIcon, SmileIcon, UserIcon } from "lucide-react";
 
 import { ShowcaseSection } from "../showcase";
 

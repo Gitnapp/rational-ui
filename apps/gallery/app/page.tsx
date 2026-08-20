@@ -4,8 +4,8 @@ import { GallerySidebarShell } from "../components/gallery/app-shell";
 import { NAV_GROUPS, type NavItemId } from "../components/gallery/nav-data";
 
 import { AccordionSection } from "../components/gallery/sections/accordion";
-import { AlertDialogSection } from "../components/gallery/sections/alert-dialog";
 import { AlertSection } from "../components/gallery/sections/alert";
+import { AlertDialogSection } from "../components/gallery/sections/alert-dialog";
 import { AvatarSection } from "../components/gallery/sections/avatar";
 import { BadgeSection } from "../components/gallery/sections/badge";
 import { BreadcrumbSection } from "../components/gallery/sections/breadcrumb";
@@ -21,8 +21,8 @@ import { DrawerSection } from "../components/gallery/sections/drawer";
 import { DropdownMenuSection } from "../components/gallery/sections/dropdown-menu";
 import { FormSection } from "../components/gallery/sections/form";
 import { HoverCardSection } from "../components/gallery/sections/hover-card";
-import { InputOtpSection } from "../components/gallery/sections/input-otp";
 import { InputSection } from "../components/gallery/sections/input";
+import { InputOtpSection } from "../components/gallery/sections/input-otp";
 import { LabelSection } from "../components/gallery/sections/label";
 import { MenubarSection } from "../components/gallery/sections/menubar";
 import { NavigationMenuSection } from "../components/gallery/sections/navigation-menu";
@@ -41,8 +41,8 @@ import { SwitchSection } from "../components/gallery/sections/switch";
 import { TableSection } from "../components/gallery/sections/table";
 import { TabsSection } from "../components/gallery/sections/tabs";
 import { TextareaSection } from "../components/gallery/sections/textarea";
-import { ToggleGroupSection } from "../components/gallery/sections/toggle-group";
 import { ToggleSection } from "../components/gallery/sections/toggle";
+import { ToggleGroupSection } from "../components/gallery/sections/toggle-group";
 import { TooltipSection } from "../components/gallery/sections/tooltip";
 
 const SECTIONS: Record<NavItemId, ComponentType> = {
@@ -97,8 +97,9 @@ export default function GalleryPage() {
           <h1 className="text-2xl font-semibold text-foreground">组件展示台</h1>
           <p className="max-w-2xl text-sm text-muted-foreground">
             @garage/ui 全部控件与变体的交互式预览。所有样式来自 @garage/design-tokens；
-            主题只跟随系统 prefers-color-scheme，没有手动切换开关。左栏功能区与顶栏来自
-            @garage/web-shell，与 content-factory / navigator / userportal 同一套外壳。
+            主题默认跟随系统 prefers-color-scheme，顶栏右侧有仅限本验收台的 light / dark / system
+            预览开关（铁律 #4 约束产品，不约束验收台）。左栏功能区与顶栏来自 @garage/web-shell，与
+            content-factory / navigator / userportal 同一套外壳。
           </p>
         </header>
         {NAV_GROUPS.map((group) => (

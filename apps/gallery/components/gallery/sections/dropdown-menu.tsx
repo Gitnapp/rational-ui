@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import { Button } from "@garage/ui/components/ui/button";
 import {
   DropdownMenu,
@@ -14,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@garage/ui/components/ui/dropdown-menu";
+import { useState } from "react";
 
 import { ShowcaseSection } from "../showcase";
 

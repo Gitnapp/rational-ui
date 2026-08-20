@@ -1,7 +1,6 @@
-import { CalendarIcon } from "lucide-react";
-
 import { Button } from "@garage/ui/components/ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@garage/ui/components/ui/hover-card";
+import { CalendarIcon } from "lucide-react";
 
 import { ShowcaseSection } from "../showcase";
 

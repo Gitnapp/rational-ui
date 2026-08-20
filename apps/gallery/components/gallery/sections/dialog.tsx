@@ -16,7 +16,11 @@ import { ShowcaseSection } from "../showcase";
 
 export function DialogSection() {
   return (
-    <ShowcaseSection id="dialog" title="Dialog" description="Modal overlay, focus-trapped by Radix.">
+    <ShowcaseSection
+      id="dialog"
+      title="Dialog"
+      description="Modal overlay, focus-trapped by Radix."
+    >
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline">Edit profile</Button>

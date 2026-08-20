@@ -5,7 +5,11 @@ import { ShowcaseSection, Stack } from "../showcase";
 
 export function LabelSection() {
   return (
-    <ShowcaseSection id="label" title="Label" description="Accessible field label, paired with a control via id/htmlFor.">
+    <ShowcaseSection
+      id="label"
+      title="Label"
+      description="Accessible field label, paired with a control via id/htmlFor."
+    >
       <Stack>
         <div className="grid gap-2">
           <Label htmlFor="label-email">Email</Label>

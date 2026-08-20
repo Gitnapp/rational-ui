@@ -9,7 +9,11 @@ import { ShowcaseSection, Stack } from "../showcase";
 
 export function InputOtpSection() {
   return (
-    <ShowcaseSection id="input-otp" title="Input OTP" description="One-time-passcode input, 6 digits.">
+    <ShowcaseSection
+      id="input-otp"
+      title="Input OTP"
+      description="One-time-passcode input, 6 digits."
+    >
       <Stack>
         <InputOTP maxLength={6}>
           <InputOTPGroup>

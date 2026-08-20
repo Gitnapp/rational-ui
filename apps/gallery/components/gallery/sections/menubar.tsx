@@ -12,7 +12,11 @@ import { ShowcaseSection } from "../showcase";
 
 export function MenubarSection() {
   return (
-    <ShowcaseSection id="menubar" title="Menubar" description="Desktop-style menu bar, keyboard-navigable via Radix.">
+    <ShowcaseSection
+      id="menubar"
+      title="Menubar"
+      description="Desktop-style menu bar, keyboard-navigable via Radix."
+    >
       <Menubar>
         <MenubarMenu>
           <MenubarTrigger>File</MenubarTrigger>

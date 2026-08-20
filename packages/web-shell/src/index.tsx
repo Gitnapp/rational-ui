@@ -1,11 +1,5 @@
 "use client";
 
-// 跨 app 应用外壳：左栏功能区（bg-rail 主题轨）+ 顶栏功能 tab（同一面连续延伸）。
-// 语义真相源：根 design.md「应用外壳：左栏功能区 + 顶栏功能 tab」。三端
-// （content-factory / navigator / userportal）统一引用本包，不在 app 内另造外壳。
-import Link from "next/link";
-import React, { useEffect, useRef, type MouseEvent, type ReactNode } from "react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +7,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@garage/ui/components/ui/dropdown-menu";
+// 跨 app 应用外壳：左栏功能区（bg-rail 主题轨）+ 顶栏功能 tab（同一面连续延伸）。
+// 语义真相源：根 design.md「应用外壳：左栏功能区 + 顶栏功能 tab」。三端
+// （content-factory / navigator / userportal）统一引用本包，不在 app 内另造外壳。
+import Link from "next/link";
+import { type MouseEvent, type ReactNode, useEffect, useRef } from "react";
 
 import { buttonVariants } from "./button";
 
@@ -274,9 +273,7 @@ export function RailAppSwitcher({
           <span className="min-w-0 flex-1 text-left">
             <RailBrand collapsed={collapsed} icon={current.icon} title={current.name} />
           </span>
-          {!collapsed && (
-            <span className="shrink-0 text-rail-foreground/50">{chevronIcon}</span>
-          )}
+          {!collapsed && <span className="shrink-0 text-rail-foreground/50">{chevronIcon}</span>}
         </button>
       </DropdownMenuTrigger>
       {/* 下拉浮层在 popover 面而非主题轨上，配色改用 popover/muted token。 */}
@@ -353,9 +350,7 @@ export function RailNavLink({
         // 绝不能用 mx-auto：auto margin 按「正在 300ms 动画中的」轨宽实时求值，
         // 折叠瞬间会把图标甩到宽轨中点再滑回来（实测单帧 98px 的可见闪动）。
         // size-8 已等于折叠态 nav 的内宽，本就贴合左缘，无需 auto margin 居中。
-        collapsed
-          ? "size-8 justify-center"
-          : "min-h-11 px-2 py-2.5 md:min-h-8 md:py-1.5",
+        collapsed ? "size-8 justify-center" : "min-h-11 px-2 py-2.5 md:min-h-8 md:py-1.5",
       )}
     >
       {icon}
@@ -467,7 +462,9 @@ export function RailUserBlock({
   const avatarLabel = Array.from(name.trim())[0]?.toUpperCase() || "U";
   const identity = (
     <>
-      <span className="block truncate text-sm font-medium leading-5 text-rail-foreground">{name}</span>
+      <span className="block truncate text-sm font-medium leading-5 text-rail-foreground">
+        {name}
+      </span>
       {caption ? <span className="block text-micro text-rail-foreground/50">{caption}</span> : null}
     </>
   );
@@ -476,7 +473,9 @@ export function RailUserBlock({
     <div
       className={cn(
         "border-t border-rail-foreground/10",
-        collapsed ? "flex flex-col items-center gap-1.5 px-1 pt-3" : "flex items-center gap-2.5 pt-3",
+        collapsed
+          ? "flex flex-col items-center gap-1.5 px-1 pt-3"
+          : "flex items-center gap-2.5 pt-3",
       )}
       title={collapsed ? name : undefined}
     >

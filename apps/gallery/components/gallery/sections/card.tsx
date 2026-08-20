@@ -14,7 +14,11 @@ import { ShowcaseSection } from "../showcase";
 
 export function CardSection() {
   return (
-    <ShowcaseSection id="card" title="Card" description="Surface for grouping related content, headers, and actions.">
+    <ShowcaseSection
+      id="card"
+      title="Card"
+      description="Surface for grouping related content, headers, and actions."
+    >
       <Card className="w-80">
         <CardHeader>
           <CardTitle>Create project</CardTitle>

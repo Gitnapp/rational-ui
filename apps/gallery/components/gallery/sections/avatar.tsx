@@ -4,7 +4,11 @@ import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 
 export function AvatarSection() {
   return (
-    <ShowcaseSection id="avatar" title="Avatar" description="Image with a fallback for broken or missing sources.">
+    <ShowcaseSection
+      id="avatar"
+      title="Avatar"
+      description="Image with a fallback for broken or missing sources."
+    >
       <VariantRow>
         <Variant label="broken image → fallback">
           <Avatar>

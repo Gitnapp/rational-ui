@@ -1,0 +1,27 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # typecheck + 全部包的测试(含 packages/ui 的定制标记断言与不变量测试)
+      - run: pnpm check
+
+      # next build 能抓到纯 typecheck 抓不到的 RSC / client boundary 问题
+      - run: pnpm --filter @garage/gallery build

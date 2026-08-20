@@ -1,9 +1,9 @@
-import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
 import {
   CasdoorLoginPrompt,
+  type RailApp,
   RailAppSwitcher,
   RailBrand,
   RailCollapseButton,
@@ -13,17 +13,12 @@ import {
   RailSidebar,
   RailTabs,
   RailUserBlock,
-  type RailApp,
 } from "./index";
 
 describe("shared rail shell accessibility", () => {
   it("renders the mobile drawer as a labelled modal with one keyboard close control", () => {
     const markup = renderToStaticMarkup(
-      <RailMobileDrawer
-        closeIcon={<span>×</span>}
-        onClose={() => undefined}
-        open
-      >
+      <RailMobileDrawer closeIcon={<span>×</span>} onClose={() => undefined} open>
         <a href="/users">用户</a>
       </RailMobileDrawer>,
     );
@@ -42,13 +37,7 @@ describe("shared rail shell accessibility", () => {
         brand={<span>Garage</span>}
         collapsed={false}
         nav={
-          <RailNavLink
-            active
-            collapsed={false}
-            href="/users"
-            icon={<span>U</span>}
-            label="用户"
-          />
+          <RailNavLink active collapsed={false} href="/users" icon={<span>U</span>} label="用户" />
         }
       />,
     );
@@ -120,11 +109,7 @@ describe("shared rail shell accessibility", () => {
   it("does not expose a closed drawer in server output", () => {
     expect(
       renderToStaticMarkup(
-        <RailMobileDrawer
-          closeIcon={<span>×</span>}
-          onClose={() => undefined}
-          open={false}
-        >
+        <RailMobileDrawer closeIcon={<span>×</span>} onClose={() => undefined} open={false}>
           <span>隐藏内容</span>
         </RailMobileDrawer>,
       ),
@@ -133,20 +118,10 @@ describe("shared rail shell accessibility", () => {
 
   it("derives rail interaction surfaces from the theme-aware foreground token", () => {
     const link = renderToStaticMarkup(
-      <RailNavLink
-        active
-        collapsed={false}
-        href="/users"
-        icon={<span>U</span>}
-        label="用户"
-      />,
+      <RailNavLink active collapsed={false} href="/users" icon={<span>U</span>} label="用户" />,
     );
     const toggle = renderToStaticMarkup(
-      <RailCollapseButton
-        collapsed={false}
-        icon={<span>⇤</span>}
-        onToggle={() => undefined}
-      />,
+      <RailCollapseButton collapsed={false} icon={<span>⇤</span>} onToggle={() => undefined} />,
     );
 
     expect(link).toContain("bg-rail-foreground/10");
@@ -224,8 +199,7 @@ describe("shared rail shell accessibility", () => {
         />,
       );
 
-    const navClass = (markup: string) =>
-      /<nav[^>]*class="([^"]*)"/.exec(markup)?.[1] ?? "";
+    const navClass = (markup: string) => /<nav[^>]*class="([^"]*)"/.exec(markup)?.[1] ?? "";
 
     const collapsedNav = navClass(render(true));
     const expandedNav = navClass(render(false));
@@ -254,7 +228,13 @@ describe("shared rail shell accessibility", () => {
 
 describe("shared rail app switcher", () => {
   const apps: readonly RailApp[] = [
-    { id: "cf", name: "Content Factory", href: "/cf", icon: <span>C</span>, description: "内容生产" },
+    {
+      id: "cf",
+      name: "Content Factory",
+      href: "/cf",
+      icon: <span>C</span>,
+      description: "内容生产",
+    },
     { id: "nav", name: "Navigator", href: "/nav", icon: <span>N</span> },
   ];
   const baseProps = { apps, chevronIcon: <span>⌄</span>, currentAppId: "cf" };
@@ -263,9 +243,7 @@ describe("shared rail app switcher", () => {
     const brand = renderToStaticMarkup(
       <RailBrand collapsed={false} icon={<span>C</span>} title="Content Factory" />,
     );
-    const switcher = renderToStaticMarkup(
-      <RailAppSwitcher {...baseProps} collapsed={false} />,
-    );
+    const switcher = renderToStaticMarkup(<RailAppSwitcher {...baseProps} collapsed={false} />);
 
     // design.md「品牌区」：切换器内部复用 RailBrand，徽章/标题规格不得分叉。
     expect(switcher).toContain("size-7");
@@ -368,18 +346,16 @@ describe("shared rail account block", () => {
     const withAccount = renderToStaticMarkup(
       <RailUserBlock {...baseProps} collapsed={false} nameHref="/account" />,
     );
-    const withoutAccount = renderToStaticMarkup(
-      <RailUserBlock {...baseProps} collapsed={false} />,
-    );
+    const withoutAccount = renderToStaticMarkup(<RailUserBlock {...baseProps} collapsed={false} />);
 
     expect(withAccount).toContain('href="/account"');
     expect(withoutAccount).not.toContain('href="/account"');
   });
 
   it("falls back to a deterministic avatar initial for an empty display name", () => {
-    expect(
-      renderToStaticMarkup(<RailUserBlock {...baseProps} collapsed name="   " />),
-    ).toContain(">U<");
+    expect(renderToStaticMarkup(<RailUserBlock {...baseProps} collapsed name="   " />)).toContain(
+      ">U<",
+    );
   });
 });
 
@@ -445,7 +421,9 @@ describe("shared Casdoor login prompt", () => {
       </CasdoorLoginPrompt>,
     );
 
-    expect(markup).toContain('<section class="w-full max-w-md rounded-lg bg-card p-8 text-card-foreground">');
+    expect(markup).toContain(
+      '<section class="w-full max-w-md rounded-lg bg-card p-8 text-card-foreground">',
+    );
     expect(markup).toContain("继续");
     expect(markup).not.toContain("使用 Casdoor 登录");
   });
@@ -454,6 +432,8 @@ describe("shared Casdoor login prompt", () => {
     const markup = renderToStaticMarkup(<CasdoorLoginPrompt {...baseProps} as="div" />);
 
     expect(markup).not.toContain("<main");
-    expect(markup).toContain('<div class="grid min-h-dvh place-items-center bg-muted/30 p-6 text-foreground">');
+    expect(markup).toContain(
+      '<div class="grid min-h-dvh place-items-center bg-muted/30 p-6 text-foreground">',
+    );
   });
 });

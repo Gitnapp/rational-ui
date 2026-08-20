@@ -1,14 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronsUpDownIcon } from "lucide-react";
-
 import { Button } from "@garage/ui/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@garage/ui/components/ui/collapsible";
+import { ChevronsUpDownIcon } from "lucide-react";
+import { useState } from "react";
 
 import { ShowcaseSection } from "../showcase";
 

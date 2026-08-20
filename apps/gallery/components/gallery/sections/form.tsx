@@ -1,10 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
-
 import { Button } from "@garage/ui/components/ui/button";
 import {
   Form,
@@ -16,6 +11,10 @@ import {
   FormMessage,
 } from "@garage/ui/components/ui/form";
 import { Input } from "@garage/ui/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 import { ShowcaseSection, Stack } from "../showcase";
 
@@ -30,11 +29,15 @@ export function FormSection() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    toast("Submitted: " + JSON.stringify(values));
+    toast(`Submitted: ${JSON.stringify(values)}`);
   }
 
   return (
-    <ShowcaseSection id="form" title="Form" description="react-hook-form + zod validation wired through the Form primitives.">
+    <ShowcaseSection
+      id="form"
+      title="Form"
+      description="react-hook-form + zod validation wired through the Form primitives."
+    >
       <Stack>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-sm space-y-6">

@@ -1,12 +1,15 @@
-import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-react";
-
 import { ToggleGroup, ToggleGroupItem } from "@garage/ui/components/ui/toggle-group";
+import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-react";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 
 export function ToggleGroupSection() {
   return (
-    <ShowcaseSection id="toggle-group" title="Toggle Group" description="A set of two-state buttons, single- or multi-select.">
+    <ShowcaseSection
+      id="toggle-group"
+      title="Toggle Group"
+      description="A set of two-state buttons, single- or multi-select."
+    >
       <VariantRow>
         <Variant label="single">
           <ToggleGroup type="single" defaultValue="left" variant="outline">

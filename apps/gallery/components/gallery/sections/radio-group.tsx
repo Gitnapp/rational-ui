@@ -5,7 +5,11 @@ import { ShowcaseSection, Stack } from "../showcase";
 
 export function RadioGroupSection() {
   return (
-    <ShowcaseSection id="radio-group" title="Radio Group" description="Single-select among mutually exclusive options.">
+    <ShowcaseSection
+      id="radio-group"
+      title="Radio Group"
+      description="Single-select among mutually exclusive options."
+    >
       <Stack>
         <RadioGroup defaultValue="comfortable">
           <div className="flex items-center gap-2">

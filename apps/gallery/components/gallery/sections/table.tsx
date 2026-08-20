@@ -19,7 +19,11 @@ const invoices = [
 
 export function TableSection() {
   return (
-    <ShowcaseSection id="table" title="Table" description="Tabular data with a header row and aligned cells.">
+    <ShowcaseSection
+      id="table"
+      title="Table"
+      description="Tabular data with a header row and aligned cells."
+    >
       <Table>
         <TableCaption>A list of recent invoices.</TableCaption>
         <TableHeader>

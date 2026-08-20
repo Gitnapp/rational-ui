@@ -8,7 +8,7 @@ export const REQUIRED_WEB_SHELL_UTILITIES = Object.freeze([
   // Token-backed utility from @garage/design-tokens. If a consumer stops
   // importing the token package, this resolves to nothing and the shell's
   // floating layers silently lose their elevation instead of failing.
-  String.raw`.shadow-overlay`,
+  ".shadow-overlay",
 ]);
 
 async function collectCssFiles(directory) {
@@ -16,7 +16,7 @@ async function collectCssFiles(directory) {
   const files = [];
   for (const entry of entries) {
     const path = resolve(directory, entry.name);
-    if (entry.isDirectory()) files.push(...await collectCssFiles(path));
+    if (entry.isDirectory()) files.push(...(await collectCssFiles(path)));
     else if (entry.isFile() && entry.name.endsWith(".css")) files.push(path);
   }
   return files;
@@ -43,7 +43,5 @@ export async function assertBuiltWebShellCss(buildDirectory) {
 if (process.argv[1]?.endsWith("/assert-tailwind-build.mjs")) {
   const buildDirectory = resolve(process.argv[2] || ".next");
   const result = await assertBuiltWebShellCss(buildDirectory);
-  console.log(
-    `WEB_SHELL_CSS_GUARD: PASS files=${result.files} utilities=${result.utilities}`,
-  );
+  console.log(`WEB_SHELL_CSS_GUARD: PASS files=${result.files} utilities=${result.utilities}`);
 }

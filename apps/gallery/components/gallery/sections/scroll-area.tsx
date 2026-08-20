@@ -7,7 +7,11 @@ const tags = Array.from({ length: 20 }, (_, i) => `Tag ${i + 1}`);
 
 export function ScrollAreaSection() {
   return (
-    <ShowcaseSection id="scroll-area" title="Scroll Area" description="Custom-styled scrollable region.">
+    <ShowcaseSection
+      id="scroll-area"
+      title="Scroll Area"
+      description="Custom-styled scrollable region."
+    >
       <ScrollArea className="h-72 w-48 rounded-md border">
         <div className="p-4">
           <h4 className="mb-4 text-sm font-medium text-foreground">Tags</h4>

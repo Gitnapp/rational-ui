@@ -4,7 +4,11 @@ import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 
 export function InputSection() {
   return (
-    <ShowcaseSection id="input" title="Input" description="Text input with placeholder, disabled, and aria-invalid states.">
+    <ShowcaseSection
+      id="input"
+      title="Input"
+      description="Text input with placeholder, disabled, and aria-invalid states."
+    >
       <VariantRow>
         <Variant label="default">
           <Input placeholder="Default" />

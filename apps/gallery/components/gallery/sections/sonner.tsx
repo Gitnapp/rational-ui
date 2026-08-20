@@ -1,14 +1,17 @@
 "use client";
 
-import { toast } from "sonner";
-
 import { Button } from "@garage/ui/components/ui/button";
+import { toast } from "sonner";
 
 import { ShowcaseSection, VariantRow } from "../showcase";
 
 export function SonnerSection() {
   return (
-    <ShowcaseSection id="sonner" title="Sonner" description="Toast notifications, mounted globally via <Toaster />.">
+    <ShowcaseSection
+      id="sonner"
+      title="Sonner"
+      description="Toast notifications, mounted globally via <Toaster />."
+    >
       <VariantRow>
         <Button variant="outline" onClick={() => toast("Event has been created.")}>
           Default

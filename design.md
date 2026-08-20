@@ -103,10 +103,10 @@ controls:
   comfortableHeight: 36px
   touchTarget: 44px
 icons:
-  family: "Phosphor（Navigator / User Portal）；Content Factory 保留现有 Lucide primitive"
+  family: "业务/导航图标 Phosphor（Navigator / User Portal）；组件内部结构性图标随 @garage/ui 走 Lucide；Content Factory 保留现有 Lucide primitive"
   weight: regular
   sizes: [16px, 20px]
-  rule: "同一 surface 只用一个图标家族；优先圆润轮廓，禁止手绘 SVG 与 emoji 图标。"
+  rule: "同一 surface 的业务图标只用一个图标家族；优先圆润轮廓，禁止手绘 SVG 与 emoji 图标。"
 rounded:
   base: 0.5rem     # --radius（与 app/globals.css 同步；2026-07-09 resource UI polish 收紧）
   sm: calc(radius - 4px)
@@ -234,7 +234,8 @@ indicator、图标轨入口、icon-only 控件的 hover 面、主题轨用户区
 
 ### 图标
 
-- Navigator 与 User Portal 统一使用 Phosphor `regular` 圆润轮廓；同一 surface 不混 Lucide、emoji 或手绘 SVG。
+- 业务与导航图标：Navigator 与 User Portal 统一使用 Phosphor `regular` 圆润轮廓；同一 surface 不混 Lucide、emoji 或手绘 SVG。
+- 组件内部结构性图标（下拉箭头、关闭 X、勾选对号等）随 `@garage/ui` 组件走 Lucide——它们是组件实现的一部分而非业务语义，不计入 surface 的家族混用。
 - Content Factory 已有 Lucide/assistant-ui primitive 时保持原家族，避免无价值的大规模替换。
 - 默认 UI 图标 `16px`，导航/工作台图标 `20px`；icon-only 控件必须有本地化可访问名称。
 - 图标只帮助识别动作或对象，不作为标题旁装饰。退出等危险动作只在 hover/focus 显示语义色。

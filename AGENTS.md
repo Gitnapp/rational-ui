@@ -17,6 +17,10 @@
   与按压反馈），不引入业务状态。新增/更新组件用 `pnpm dlx shadcn@latest add <name> -y -o`，
   CLI 生成的内部 import 是 `@/...` 别名，本包不接 bundler 别名解析（供其它包以源码方式直接
   typecheck），生成后需手动把 `@/lib/utils`、`@/components/ui/*` 换成相对路径。
+  带 `@garage-customized` 头部标记的文件（button / calendar / sonner）有本地定制，
+  禁止直接 `-o` 覆盖——先 diff 再手动合入；`pnpm test` 会断言标记存在。
+- lint/format 由 biome 统一（`biome.json`，semicolons always）：`pnpm format` 修复，
+  `pnpm check` = typecheck + test + lint，CI 全量强制。
 - `packages/web-shell` 只维护跨产品共享的外壳（RailShell 等）；`Button` 已收敛进
   `@garage/ui`，`web-shell` 的 `button.tsx` 只做转出。
 - `apps/gallery`（`@garage/gallery`）是 `@garage/ui` 的交互式展示台，用于视觉验收与开发预览，

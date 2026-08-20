@@ -1,8 +1,11 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { Slot } from "radix-ui"
+// @garage-customized: design.md 紧凑尺寸表(32/36px)、按压反馈、coarse-pointer 44px 命中区。
+// 升级本组件禁止直接 `shadcn add -o` 覆盖——先 diff 再手动合入。CI 断言此标记存在(scripts/assert-customization-markers.mjs)。
 
-import { cn } from "../../lib/utils"
+import { cva, type VariantProps } from "class-variance-authority";
+import { Slot } from "radix-ui";
+import type * as React from "react";
+
+import { cn } from "../../lib/utils";
 
 // Sizing is tuned to design.md「间距与尺寸」(32px compact / 36px form-primary controls),
 // press feedback (active:scale-0.98) and coarse-pointer 44px hit targets — not vanilla shadcn defaults.
@@ -35,8 +38,8 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
-)
+  },
+);
 
 function Button({
   className,
@@ -46,9 +49,9 @@ function Button({
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
+    asChild?: boolean;
   }) {
-  const Comp = asChild ? Slot.Root : "button"
+  const Comp = asChild ? Slot.Root : "button";
 
   return (
     <Comp
@@ -58,7 +61,7 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

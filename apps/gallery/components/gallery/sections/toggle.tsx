@@ -1,12 +1,15 @@
-import { BoldIcon } from "lucide-react";
-
 import { Toggle } from "@garage/ui/components/ui/toggle";
+import { BoldIcon } from "lucide-react";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 
 export function ToggleSection() {
   return (
-    <ShowcaseSection id="toggle" title="Toggle" description="Two-state button, e.g. for formatting controls.">
+    <ShowcaseSection
+      id="toggle"
+      title="Toggle"
+      description="Two-state button, e.g. for formatting controls."
+    >
       <VariantRow>
         <Variant label="default">
           <Toggle aria-label="Toggle bold">Toggle</Toggle>

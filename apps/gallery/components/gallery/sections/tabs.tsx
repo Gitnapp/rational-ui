@@ -4,7 +4,11 @@ import { ShowcaseSection } from "../showcase";
 
 export function TabsSection() {
   return (
-    <ShowcaseSection id="tabs" title="Tabs" description="Switch between related views without navigation.">
+    <ShowcaseSection
+      id="tabs"
+      title="Tabs"
+      description="Switch between related views without navigation."
+    >
       <Tabs defaultValue="account" className="w-96">
         <TabsList>
           <TabsTrigger value="account">Account</TabsTrigger>

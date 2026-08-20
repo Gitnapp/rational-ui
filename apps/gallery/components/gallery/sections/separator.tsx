@@ -4,7 +4,11 @@ import { ShowcaseSection, Stack } from "../showcase";
 
 export function SeparatorSection() {
   return (
-    <ShowcaseSection id="separator" title="Separator" description="Visual divider between content, horizontal or vertical.">
+    <ShowcaseSection
+      id="separator"
+      title="Separator"
+      description="Visual divider between content, horizontal or vertical."
+    >
       <Stack>
         <div className="w-64 space-y-1">
           <h4 className="text-sm font-medium text-foreground">Garage UI</h4>

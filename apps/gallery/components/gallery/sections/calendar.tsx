@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-
 import { Calendar } from "@garage/ui/components/ui/calendar";
+import { useState } from "react";
 
 import { ShowcaseSection, Stack } from "../showcase";
 
@@ -14,9 +13,18 @@ export function CalendarSection() {
   const [selected, setSelected] = useState<Date | undefined>(undefined);
 
   return (
-    <ShowcaseSection id="calendar" title="Calendar" description="Date picker built on react-day-picker.">
+    <ShowcaseSection
+      id="calendar"
+      title="Calendar"
+      description="Date picker built on react-day-picker."
+    >
       <Stack>
-        <Calendar mode="single" selected={selected} onSelect={setSelected} className="rounded-md border" />
+        <Calendar
+          mode="single"
+          selected={selected}
+          onSelect={setSelected}
+          className="rounded-md border"
+        />
         <p className="text-sm text-muted-foreground">
           Selected: {selected ? selected.toLocaleDateString("en-US") : "none"}
         </p>

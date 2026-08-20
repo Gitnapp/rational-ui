@@ -12,7 +12,11 @@ import { ShowcaseSection, Stack } from "../showcase";
 
 export function SelectSection() {
   return (
-    <ShowcaseSection id="select" title="Select" description="Listbox built on Radix Select, keyboard navigable.">
+    <ShowcaseSection
+      id="select"
+      title="Select"
+      description="Listbox built on Radix Select, keyboard navigable."
+    >
       <Stack>
         <Select defaultValue="banana">
           <SelectTrigger className="w-[180px]">

@@ -5,7 +5,11 @@ import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 
 export function CheckboxSection() {
   return (
-    <ShowcaseSection id="checkbox" title="Checkbox" description="Paired with a Label for an accessible click target.">
+    <ShowcaseSection
+      id="checkbox"
+      title="Checkbox"
+      description="Paired with a Label for an accessible click target."
+    >
       <VariantRow>
         <Variant label="unchecked">
           <div className="flex items-center gap-2">

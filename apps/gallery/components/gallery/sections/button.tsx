@@ -1,6 +1,5 @@
-import { Loader2Icon, MailIcon } from "lucide-react";
-
 import { Button } from "@garage/ui/components/ui/button";
+import { Loader2Icon, MailIcon } from "lucide-react";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 
