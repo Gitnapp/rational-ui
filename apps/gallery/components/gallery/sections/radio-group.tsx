@@ -1,5 +1,5 @@
-import { Label } from "@garage/ui/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@garage/ui/components/ui/radio-group";
+import { Label } from "@gitnapp/ui/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@gitnapp/ui/components/ui/radio-group";
 
 import { ShowcaseSection, Stack } from "../showcase";
 

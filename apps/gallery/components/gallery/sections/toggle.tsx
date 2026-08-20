@@ -1,4 +1,4 @@
-import { Toggle } from "@garage/ui/components/ui/toggle";
+import { Toggle } from "@gitnapp/ui/components/ui/toggle";
 import { BoldIcon } from "lucide-react";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";

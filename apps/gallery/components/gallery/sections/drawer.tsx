@@ -1,4 +1,4 @@
-import { Button } from "@garage/ui/components/ui/button";
+import { Button } from "@gitnapp/ui/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -8,7 +8,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@garage/ui/components/ui/drawer";
+} from "@gitnapp/ui/components/ui/drawer";
 
 import { ShowcaseSection } from "../showcase";
 

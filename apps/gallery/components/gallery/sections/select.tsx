@@ -6,7 +6,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@garage/ui/components/ui/select";
+} from "@gitnapp/ui/components/ui/select";
 
 import { ShowcaseSection, Stack } from "../showcase";
 

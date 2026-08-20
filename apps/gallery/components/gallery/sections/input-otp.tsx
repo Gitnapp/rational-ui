@@ -3,7 +3,7 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@garage/ui/components/ui/input-otp";
+} from "@gitnapp/ui/components/ui/input-otp";
 
 import { ShowcaseSection, Stack } from "../showcase";
 

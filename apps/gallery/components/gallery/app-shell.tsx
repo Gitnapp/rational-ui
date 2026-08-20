@@ -9,11 +9,11 @@ import {
   RailNavLink,
   RailShell,
   RailSidebar,
-} from "@garage/web-shell";
+} from "@gitnapp/web-shell";
 // The gallery is a Garage app like content-factory/navigator/userportal, so it
 // dogfoods the real shared shell (design.md「应用外壳」) instead of a bespoke
 // sidebar: RailShell/RailSidebar/RailAppSwitcher/RailNavLink/RailCollapseButton/
-// RailMobileHeader/RailMobileDrawer all come from @garage/web-shell.
+// RailMobileHeader/RailMobileDrawer all come from @gitnapp/web-shell.
 import {
   Bell,
   Blocks,
@@ -185,7 +185,7 @@ export function GallerySidebarShell({ children }: { readonly children: ReactNode
         }
       >
         <RailMobileHeader
-          title="Garage Design System"
+          title="rational-ui"
           currentLabel={activeGroupTitle}
           onOpen={() => setMobileOpen(true)}
           menuIcon={<Menu className="size-5" />}

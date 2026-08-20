@@ -1,4 +1,4 @@
-import { Textarea } from "@garage/ui/components/ui/textarea";
+import { Textarea } from "@gitnapp/ui/components/ui/textarea";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 

@@ -103,7 +103,7 @@ controls:
   comfortableHeight: 36px
   touchTarget: 44px
 icons:
-  family: "业务/导航图标 Phosphor（Navigator / User Portal）；组件内部结构性图标随 @garage/ui 走 Lucide；Content Factory 保留现有 Lucide primitive"
+  family: "业务/导航图标 Phosphor（Navigator / User Portal）；组件内部结构性图标随 @gitnapp/ui 走 Lucide；Content Factory 保留现有 Lucide primitive"
   weight: regular
   sizes: [16px, 20px]
   rule: "同一 surface 的业务图标只用一个图标家族；优先圆润轮廓，禁止手绘 SVG 与 emoji 图标。"
@@ -209,11 +209,11 @@ indicator、图标轨入口、icon-only 控件的 hover 面、主题轨用户区
   不由 app 各自拼 form/link。**主名称必须是用户可读名称**，按
   `displayName?.trim() || name?.trim() || subject` 兜底，`subject` 只在缺少 profile
   （PAT、local-dev 等）时兜底；展示名只用于展示，鉴权/归属/审计仍只用 immutable `subject`。
-- **共享实现**：外壳组件统一来自 `packages/web-shell`（`@garage/web-shell`：`RailShell` /
+- **共享实现**：外壳组件统一来自 `packages/web-shell`（`@gitnapp/web-shell`：`RailShell` /
   `RailSidebar` / `RailBrand` / `RailNavLink` / `RailTabs` / `RailCollapseButton` /
   `RailUserBlock` / 移动端顶栏与抽屉），三端只组装、不另造外壳。`Button` 收敛在
-  `packages/ui`（`@garage/ui` 的 `Button` / `buttonVariants`，真相源
-  `packages/ui/src/components/ui/button.tsx`；`@garage/web-shell` 的 `button.tsx` 只做转出）：
+  `packages/ui`（`@gitnapp/ui` 的 `Button` / `buttonVariants`，真相源
+  `packages/ui/src/components/ui/button.tsx`；`@gitnapp/web-shell` 的 `button.tsx` 只做转出）：
   size 与 variant 表只有一份，各 app 的 `components/ui/button` 只做转出，禁止分叉尺寸或复刻 class 字面量。
   移动端顶栏（`RailMobileHeader`）必须能切换当前功能区的子页 tab——桌面顶栏在移动端不渲染，
   缺这一行等于移动端无法进入同功能区的其它子页。折叠切换时的 hover/focus
@@ -235,7 +235,7 @@ indicator、图标轨入口、icon-only 控件的 hover 面、主题轨用户区
 ### 图标
 
 - 业务与导航图标：Navigator 与 User Portal 统一使用 Phosphor `regular` 圆润轮廓；同一 surface 不混 Lucide、emoji 或手绘 SVG。
-- 组件内部结构性图标（下拉箭头、关闭 X、勾选对号等）随 `@garage/ui` 组件走 Lucide——它们是组件实现的一部分而非业务语义，不计入 surface 的家族混用。
+- 组件内部结构性图标（下拉箭头、关闭 X、勾选对号等）随 `@gitnapp/ui` 组件走 Lucide——它们是组件实现的一部分而非业务语义，不计入 surface 的家族混用。
 - Content Factory 已有 Lucide/assistant-ui primitive 时保持原家族，避免无价值的大规模替换。
 - 默认 UI 图标 `16px`，导航/工作台图标 `20px`；icon-only 控件必须有本地化可访问名称。
 - 图标只帮助识别动作或对象，不作为标题旁装饰。退出等危险动作只在 hover/focus 显示语义色。
@@ -360,7 +360,7 @@ Suggestion / Error / AuiIf），**不为凑数重写**。新增交互优先复�
 
 - ✅ 用灰阶排层级：`foreground` 主、`muted-foreground` 次、`border` 分隔。
 - ✅ 左栏主题面向上延伸包裹顶栏功能 tab；左栏 = 功能区、顶栏 = 区内 tab。
-- ✅ 外壳统一组装 `@garage/web-shell` 共享组件；侧栏底部放用户区（头像 + 名称 + 退出）。
+- ✅ 外壳统一组装 `@gitnapp/web-shell` 共享组件；侧栏底部放用户区（头像 + 名称 + 退出）。
 - ✅ 侧栏收起统一用顶栏左侧 PanelLeft ghost icon（CF 样式），折叠成 48px 图标轨。
 - ✅ 图标位高亮用 `size-*` 钉成正方形（折叠态入口 `size-8`）；主题轨头像走 `rounded-md`。
 - ✅ 主操作只给一个 `primary`（近黑）按钮；其余用 ghost/outline。

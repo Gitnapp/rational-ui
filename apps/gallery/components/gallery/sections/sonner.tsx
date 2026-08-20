@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@garage/ui/components/ui/button";
+import { Button } from "@gitnapp/ui/components/ui/button";
 import { toast } from "sonner";
 
 import { ShowcaseSection, VariantRow } from "../showcase";

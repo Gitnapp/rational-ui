@@ -6,7 +6,7 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from "@garage/ui/components/ui/menubar";
+} from "@gitnapp/ui/components/ui/menubar";
 
 import { ShowcaseSection } from "../showcase";
 

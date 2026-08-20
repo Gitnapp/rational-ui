@@ -1,5 +1,9 @@
-import { Button } from "@garage/ui/components/ui/button";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@garage/ui/components/ui/hover-card";
+import { Button } from "@gitnapp/ui/components/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@gitnapp/ui/components/ui/hover-card";
 import { CalendarIcon } from "lucide-react";
 
 import { ShowcaseSection } from "../showcase";
@@ -13,13 +17,13 @@ export function HoverCardSection() {
     >
       <HoverCard>
         <HoverCardTrigger asChild>
-          <Button variant="link">@garage-ui</Button>
+          <Button variant="link">@gitnapp-ui</Button>
         </HoverCardTrigger>
         <HoverCardContent className="w-72">
           <div className="flex flex-col gap-2">
-            <h4 className="text-sm font-semibold">@garage-ui</h4>
+            <h4 className="text-sm font-semibold">@gitnapp-ui</h4>
             <p className="text-sm text-muted-foreground">
-              The Garage design system. Shared components, tokens, and patterns.
+              The rational-ui design system. Shared components, tokens, and patterns.
             </p>
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <CalendarIcon className="size-3.5" />

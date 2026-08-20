@@ -1,4 +1,4 @@
-import { Badge } from "@garage/ui/components/ui/badge";
+import { Badge } from "@gitnapp/ui/components/ui/badge";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 

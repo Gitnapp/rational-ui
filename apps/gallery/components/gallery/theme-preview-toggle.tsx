@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@garage/ui/lib/utils";
+import { cn } from "@gitnapp/ui/lib/utils";
 // Gallery-only preview switch. 铁律 #4（无手动 theme switcher）约束的是产品；
 // gallery 是验收台，需要不靠操作系统设置就能检查暗色下的对比度/边框/阴影
 // （docs/engineering/roadmap.md §2.1）。机制复用 tokens.css 内建的

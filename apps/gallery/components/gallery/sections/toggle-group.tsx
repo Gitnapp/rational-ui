@@ -1,4 +1,4 @@
-import { ToggleGroup, ToggleGroupItem } from "@garage/ui/components/ui/toggle-group";
+import { ToggleGroup, ToggleGroupItem } from "@gitnapp/ui/components/ui/toggle-group";
 import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-react";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";

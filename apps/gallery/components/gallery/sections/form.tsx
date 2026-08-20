@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@garage/ui/components/ui/button";
+import { Button } from "@gitnapp/ui/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,8 +9,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@garage/ui/components/ui/form";
-import { Input } from "@garage/ui/components/ui/input";
+} from "@gitnapp/ui/components/ui/form";
+import { Input } from "@gitnapp/ui/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";

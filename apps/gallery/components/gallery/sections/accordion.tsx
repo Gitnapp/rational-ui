@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@garage/ui/components/ui/accordion";
+} from "@gitnapp/ui/components/ui/accordion";
 
 import { ShowcaseSection } from "../showcase";
 
@@ -22,7 +22,7 @@ export function AccordionSection() {
         <AccordionItem value="item-2">
           <AccordionTrigger>Is it styled?</AccordionTrigger>
           <AccordionContent>
-            Yes. It comes with default styles that match the Garage design system.
+            Yes. It comes with default styles that match the rational-ui design system.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">

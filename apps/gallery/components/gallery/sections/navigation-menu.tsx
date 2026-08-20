@@ -6,7 +6,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@garage/ui/components/ui/navigation-menu";
+} from "@gitnapp/ui/components/ui/navigation-menu";
 
 import { ShowcaseSection } from "../showcase";
 
@@ -25,7 +25,7 @@ export function NavigationMenuSection() {
               <ul className="grid w-64 gap-1 p-2">
                 <li>
                   <NavigationMenuLink href="#">
-                    <div className="font-medium">Garage UI</div>
+                    <div className="font-medium">rational-ui</div>
                     <div className="text-muted-foreground">Component library for React.</div>
                   </NavigationMenuLink>
                 </li>

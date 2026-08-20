@@ -1,4 +1,4 @@
-import { Alert, AlertDescription, AlertTitle } from "@garage/ui/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@gitnapp/ui/components/ui/alert";
 import { AlertTriangleIcon, InfoIcon } from "lucide-react";
 
 import { ShowcaseSection, Stack } from "../showcase";
@@ -15,7 +15,7 @@ export function AlertSection() {
           <InfoIcon />
           <AlertTitle>Heads up</AlertTitle>
           <AlertDescription>
-            This project uses design tokens from @garage/design-tokens.
+            This project uses design tokens from @gitnapp/design-tokens.
           </AlertDescription>
         </Alert>
         <Alert variant="destructive" className="w-96">

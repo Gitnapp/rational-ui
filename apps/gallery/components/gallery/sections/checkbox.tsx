@@ -1,5 +1,5 @@
-import { Checkbox } from "@garage/ui/components/ui/checkbox";
-import { Label } from "@garage/ui/components/ui/label";
+import { Checkbox } from "@gitnapp/ui/components/ui/checkbox";
+import { Label } from "@gitnapp/ui/components/ui/label";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 

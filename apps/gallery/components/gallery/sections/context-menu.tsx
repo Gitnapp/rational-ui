@@ -5,7 +5,7 @@ import {
   ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from "@garage/ui/components/ui/context-menu";
+} from "@gitnapp/ui/components/ui/context-menu";
 
 import { ShowcaseSection } from "../showcase";
 

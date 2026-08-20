@@ -1,4 +1,4 @@
-import { Input } from "@garage/ui/components/ui/input";
+import { Input } from "@gitnapp/ui/components/ui/input";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 

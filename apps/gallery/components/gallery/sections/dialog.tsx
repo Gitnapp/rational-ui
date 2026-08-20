@@ -1,4 +1,4 @@
-import { Button } from "@garage/ui/components/ui/button";
+import { Button } from "@gitnapp/ui/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@garage/ui/components/ui/dialog";
-import { Input } from "@garage/ui/components/ui/input";
-import { Label } from "@garage/ui/components/ui/label";
+} from "@gitnapp/ui/components/ui/dialog";
+import { Input } from "@gitnapp/ui/components/ui/input";
+import { Label } from "@gitnapp/ui/components/ui/label";
 
 import { ShowcaseSection } from "../showcase";
 

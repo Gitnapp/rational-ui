@@ -1,5 +1,5 @@
-import { Input } from "@garage/ui/components/ui/input";
-import { Label } from "@garage/ui/components/ui/label";
+import { Input } from "@gitnapp/ui/components/ui/input";
+import { Label } from "@gitnapp/ui/components/ui/label";
 
 import { ShowcaseSection, Stack } from "../showcase";
 

@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@garage/ui/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@gitnapp/ui/components/ui/tabs";
 
 import { ShowcaseSection } from "../showcase";
 

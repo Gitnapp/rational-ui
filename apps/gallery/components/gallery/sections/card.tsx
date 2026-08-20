@@ -1,4 +1,4 @@
-import { Button } from "@garage/ui/components/ui/button";
+import { Button } from "@gitnapp/ui/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,9 +6,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@garage/ui/components/ui/card";
-import { Input } from "@garage/ui/components/ui/input";
-import { Label } from "@garage/ui/components/ui/label";
+} from "@gitnapp/ui/components/ui/card";
+import { Input } from "@gitnapp/ui/components/ui/input";
+import { Label } from "@gitnapp/ui/components/ui/label";
 
 import { ShowcaseSection } from "../showcase";
 

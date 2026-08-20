@@ -1,5 +1,5 @@
-import { ScrollArea } from "@garage/ui/components/ui/scroll-area";
-import { Separator } from "@garage/ui/components/ui/separator";
+import { ScrollArea } from "@gitnapp/ui/components/ui/scroll-area";
+import { Separator } from "@gitnapp/ui/components/ui/separator";
 
 import { ShowcaseSection } from "../showcase";
 

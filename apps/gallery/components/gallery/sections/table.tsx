@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@garage/ui/components/ui/table";
+} from "@gitnapp/ui/components/ui/table";
 
 import { ShowcaseSection } from "../showcase";
 

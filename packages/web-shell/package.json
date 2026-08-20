@@ -1,8 +1,15 @@
 {
-  "name": "@garage/web-shell",
+  "name": "@gitnapp/web-shell",
   "version": "0.1.0",
-  "private": true,
-  "description": "跨产品应用外壳（主题 rail + 顶栏功能 tab）与共享 Button，语义真相源：根 design.md「应用外壳」",
+  "description": "跨产品应用外壳（主题 rail + 顶栏功能 tab），语义真相源：根 design.md「应用外壳」",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gitnapp/rational-ui",
+    "directory": "packages/web-shell"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "type": "module",
   "exports": {
     ".": "./src/index.tsx"
@@ -16,7 +23,7 @@
     "test": "node --test scripts/*.node-test.mjs && vitest run"
   },
   "dependencies": {
-    "@garage/ui": "workspace:*"
+    "@gitnapp/ui": "workspace:*"
   },
   "peerDependencies": {
     "next": ">=15",

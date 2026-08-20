@@ -1,10 +1,10 @@
-// 断言所有相对 shadcn CLI 产物做过本地定制的组件仍带有 `@garage-customized` 标记。
+// 断言所有相对 shadcn CLI 产物做过本地定制的组件仍带有 `@gitnapp-customized` 标记。
 // 若有人用 `shadcn add <name> -y -o` 直接覆盖,标记会随定制一起被冲掉——
 // 本脚本让这件事在 CI 上显式失败,而不是静默回退成上游默认值。
 // 新增本地定制时:在文件头部加同样格式的标记注释,并把文件加进下面列表。
 import { readFileSync } from "node:fs";
 
-const MARKER = "@garage-customized";
+const MARKER = "@gitnapp-customized";
 const CUSTOMIZED_FILES = [
   "src/components/ui/button.tsx",
   "src/components/ui/calendar.tsx",

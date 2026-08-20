@@ -3,17 +3,15 @@
 > 本文是**工作计划**,不是真相源。视觉与交互语义仍以 [`design.md`](../../design.md) 为准,
 > 分层与接入规则见 [`design-system.md`](./design-system.md)。
 >
-> 记录时间:2026-08-20(当轮修复后)。基线提交:`610f2a0`(引入 `@garage/ui` + `apps/gallery`)。
+> 记录时间:2026-08-20(当轮修复后)。基线提交:`610f2a0`(引入 `@gitnapp/ui` + `apps/gallery`)。
 
-## 0. 交付路径(部分闭环)
+## 0. 交付路径(已闭环)
 
-**已决策(2026-08-20):本仓库保持为独立的组件库仓库,不合回 infrastructure。**
-
-四个包仍是 `private: true`,靠 `workspace:*` 直接吃源码;真正的消费方
-content-factory / navigator / userportal 在另一个仓库(`GarageDev1/infrastructure`)。
-**具体的同步机制(私有 npm registry / git submodule / subtree)仍未落地**——这是
-infra 侧的工程任务,不在本仓库内闭环。在机制落地前,`packages/ui` 的组件不会被
-线上代码消费。
+**已决策并落地(2026-08-20):本仓库保持为独立的组件库仓库(`Gitnapp/rational-ui`,
+public),不合回 infrastructure;`@gitnapp/design-tokens` / `@gitnapp/ui` /
+`@gitnapp/web-shell` 以源码形式发布到 GitHub Packages。**消费方接入与发布命令见
+README「消费方接入」「发布」。剩余动作在消费方仓库:配置 `.npmrc` 后把
+`workspace:*` 换成已发布版本。
 
 ## 1. 仍开放的项
 
@@ -35,11 +33,11 @@ gallery 是纯视觉 demo,无代码片段、无 props 表、无 do/don't。源�
   `pnpm check`(typecheck + 全部测试 + biome lint)→ `apps/gallery` 的 `next build`
   (抓纯 typecheck 抓不到的 RSC / client boundary 问题)。
 - **本地定制保护**:`button.tsx` / `calendar.tsx` / `sonner.tsx` 头部加统一
-  `@garage-customized` 标记,`packages/ui/scripts/assert-customization-markers.mjs`
+  `@gitnapp-customized` 标记,`packages/ui/scripts/assert-customization-markers.mjs`
   断言标记仍在文件头部,挂在 `pnpm test` 里,CI 强制。`shadcn add -o` 覆盖会显式失败
   而非静默丢定制。
 - **图标家族冲突**:按推荐方案改 `design.md`——组件内部结构性图标(下拉箭头、关闭 X
-  等)随 `@garage/ui` 走 Lucide,属于组件实现而非业务语义;业务/导航图标仍是
+  等)随 `@gitnapp/ui` 走 Lucide,属于组件实现而非业务语义;业务/导航图标仍是
   Phosphor `regular`。规范违反消除。
 - **gallery dark mode 预览开关**:顶栏右侧加 light / dark / system 三态切换
   (`theme-preview-toggle.tsx`),复用 tokens.css 内建的 `:root[data-theme]` 覆盖,
@@ -58,9 +56,9 @@ gallery 是纯视觉 demo,无代码片段、无 props 表、无 do/don't。源�
 
 ## 3. 已完成(历史,留作上下文)
 
-- `@garage/ui`:40 个 shadcn 组件,绑定 `@garage/design-tokens` 主题;`Button` 从
+- `@gitnapp/ui`:40 个 shadcn 组件,绑定 `@gitnapp/design-tokens` 主题;`Button` 从
   `web-shell` 收敛至此,`web-shell` 只做转出。
-- `apps/gallery`:交互式展示台,复用 `@garage/web-shell` 真实外壳(非自造侧栏)。
+- `apps/gallery`:交互式展示台,复用 `@gitnapp/web-shell` 真实外壳(非自造侧栏)。
 - 修复 Calendar 的 `toLocaleDateString()` locale 依赖导致的 SSR/CSR hydration mismatch。
 - 修复 `apps/gallery` Tailwind `source("./")` 漏扫 `components/` 导致 demo 布局 class
   静默缺失。

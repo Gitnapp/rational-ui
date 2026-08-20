@@ -1,5 +1,5 @@
-import { Label } from "@garage/ui/components/ui/label";
-import { Switch } from "@garage/ui/components/ui/switch";
+import { Label } from "@gitnapp/ui/components/ui/label";
+import { Switch } from "@gitnapp/ui/components/ui/switch";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 

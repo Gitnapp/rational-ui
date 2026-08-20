@@ -1,6 +1,6 @@
-import { Button } from "@garage/ui/components/ui/button";
-import { Input } from "@garage/ui/components/ui/input";
-import { Label } from "@garage/ui/components/ui/label";
+import { Button } from "@gitnapp/ui/components/ui/button";
+import { Input } from "@gitnapp/ui/components/ui/input";
+import { Label } from "@gitnapp/ui/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@garage/ui/components/ui/sheet";
+} from "@gitnapp/ui/components/ui/sheet";
 
 import { ShowcaseSection } from "../showcase";
 

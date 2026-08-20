@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar } from "@garage/ui/components/ui/calendar";
+import { Calendar } from "@gitnapp/ui/components/ui/calendar";
 import { useState } from "react";
 
 import { ShowcaseSection, Stack } from "../showcase";

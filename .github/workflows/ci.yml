@@ -24,4 +24,4 @@ jobs:
       - run: pnpm check
 
       # next build 能抓到纯 typecheck 抓不到的 RSC / client boundary 问题
-      - run: pnpm --filter @garage/gallery build
+      - run: pnpm --filter @gitnapp/gallery build

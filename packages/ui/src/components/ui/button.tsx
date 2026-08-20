@@ -1,4 +1,4 @@
-// @garage-customized: design.md 紧凑尺寸表(32/36px)、按压反馈、coarse-pointer 44px 命中区。
+// @gitnapp-customized: design.md 紧凑尺寸表(32/36px)、按压反馈、coarse-pointer 44px 命中区。
 // 升级本组件禁止直接 `shadcn add -o` 覆盖——先 diff 再手动合入。CI 断言此标记存在(scripts/assert-customization-markers.mjs)。
 
 import { cva, type VariantProps } from "class-variance-authority";

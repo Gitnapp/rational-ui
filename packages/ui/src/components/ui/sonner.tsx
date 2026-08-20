@@ -1,6 +1,6 @@
 "use client";
 
-// @garage-customized: 移除 next-themes,固定 theme="system"(铁律 #4:无 theme switcher)。
+// @gitnapp-customized: 移除 next-themes,固定 theme="system"(铁律 #4:无 theme switcher)。
 // 升级本组件禁止直接 `shadcn add -o` 覆盖——先 diff 再手动合入。CI 断言此标记存在(scripts/assert-customization-markers.mjs)。
 
 import {

@@ -7,7 +7,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "@garage/ui/components/ui/command";
+} from "@gitnapp/ui/components/ui/command";
 import { CalculatorIcon, CalendarIcon, SettingsIcon, SmileIcon, UserIcon } from "lucide-react";
 
 import { ShowcaseSection } from "../showcase";

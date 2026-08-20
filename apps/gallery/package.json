@@ -1,8 +1,8 @@
 {
-  "name": "@garage/gallery",
+  "name": "@gitnapp/gallery",
   "version": "0.1.0",
   "private": true,
-  "description": "Garage 设计系统交互式组件展示台：渲染 @garage/ui 全部控件及其变体，用于视觉验收与开发预览。",
+  "description": "rational-ui 设计系统交互式组件展示台：渲染 @gitnapp/ui 全部控件及其变体，用于视觉验收与开发预览。",
   "type": "module",
   "scripts": {
     "dev": "next dev",
@@ -11,9 +11,9 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@garage/design-tokens": "workspace:*",
-    "@garage/ui": "workspace:*",
-    "@garage/web-shell": "workspace:*",
+    "@gitnapp/design-tokens": "workspace:*",
+    "@gitnapp/ui": "workspace:*",
+    "@gitnapp/web-shell": "workspace:*",
     "@hookform/resolvers": "^5.9.1",
     "lucide-react": "^0.545.0",
     "next": "16.2.10",

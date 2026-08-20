@@ -14,13 +14,13 @@ importers:
 
   apps/gallery:
     dependencies:
-      '@garage/design-tokens':
+      '@gitnapp/design-tokens':
         specifier: workspace:*
         version: link:../../packages/design-tokens
-      '@garage/ui':
+      '@gitnapp/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@garage/web-shell':
+      '@gitnapp/web-shell':
         specifier: workspace:*
         version: link:../../packages/web-shell
       '@hookform/resolvers':
@@ -144,7 +144,7 @@ importers:
 
   packages/web-shell:
     dependencies:
-      '@garage/ui':
+      '@gitnapp/ui':
         specifier: workspace:*
         version: link:../ui
     devDependencies:

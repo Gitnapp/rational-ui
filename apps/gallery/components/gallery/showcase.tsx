@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 // Shared layout primitives for every component demo section in the gallery.
 // Keep these dumb — no design decisions belong here beyond what design.md
-// already encodes in @garage/design-tokens (spacing scale, card surface).
+// already encodes in @gitnapp/design-tokens (spacing scale, card surface).
 
 export function ShowcaseSection({
   id,

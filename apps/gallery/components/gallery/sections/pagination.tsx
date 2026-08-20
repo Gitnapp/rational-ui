@@ -6,7 +6,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@garage/ui/components/ui/pagination";
+} from "@gitnapp/ui/components/ui/pagination";
 
 import { ShowcaseSection } from "../showcase";
 

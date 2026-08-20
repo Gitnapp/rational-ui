@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@garage/ui/components/ui/alert-dialog";
-import { Button } from "@garage/ui/components/ui/button";
+} from "@gitnapp/ui/components/ui/alert-dialog";
+import { Button } from "@gitnapp/ui/components/ui/button";
 
 import { ShowcaseSection } from "../showcase";
 

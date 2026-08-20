@@ -9,16 +9,16 @@
 |---|---|---|---|
 | 共享语义 | [`design.md`](../../design.md) | 颜色、排版、布局几何、图标与交互原则 | 先改根 design.md，再同 PR 改共享 token 与组件 |
 | 共享 token | [`packages/design-tokens`](../../packages/design-tokens/tokens.css) | semantic colors（oklch，light + dark media query）、typography、layout geometry、radius、base styles、a11y 系统偏好适配 | 不复制 app 私有色值或尺寸 |
-| shadcn 组件库 | [`packages/ui`](../../packages/ui/src/components/ui) | 标准 shadcn 组件全集（Button/Dialog/Form/Table/…），由 `shadcn` CLI 生成，绑定 `@garage/design-tokens` 主题 | 只做 design.md 要求的最小定制；不引入业务状态 |
-| 共享外壳 | [`packages/web-shell`](../../packages/web-shell/src/index.tsx) | 跨产品应用外壳、导航、登录提示（`Button` 已转出自 `@garage/ui`） | 不引入业务状态或应用私有组件 |
-| 展示台 | [`apps/gallery`](../../apps/gallery) | `@garage/ui` 全部控件的交互式预览（`pnpm dev`） | 只做展示，不承载业务逻辑 |
+| shadcn 组件库 | [`packages/ui`](../../packages/ui/src/components/ui) | 标准 shadcn 组件全集（Button/Dialog/Form/Table/…），由 `shadcn` CLI 生成，绑定 `@gitnapp/design-tokens` 主题 | 只做 design.md 要求的最小定制；不引入业务状态 |
+| 共享外壳 | [`packages/web-shell`](../../packages/web-shell/src/index.tsx) | 跨产品应用外壳、导航、登录提示（`Button` 已转出自 `@gitnapp/ui`） | 不引入业务状态或应用私有组件 |
+| 展示台 | [`apps/gallery`](../../apps/gallery) | `@gitnapp/ui` 全部控件的交互式预览（`pnpm dev`） | 只做展示，不承载业务逻辑 |
 | 消费方 | 各产品仓库 | 产品布局、组件约定、动效细则与私有 utility | 与根 design.md 冲突时以后者为准；禁止复制 token 值 |
 
 ## 接入方式
 
 ```css
 @import "tailwindcss" source("../");   /* source() 必须钉死，防 monorepo 爬根 fork 风暴 */
-@import "@garage/design-tokens";
+@import "@gitnapp/design-tokens";
 ```
 
 字体由消费方用 `next/font/google` 注册 `Geist` / `Geist_Mono`（variable `--font-sans` / `--font-mono`）；
@@ -37,12 +37,12 @@
    头像不用 `rounded-full`；带文字的 tab / chip / badge 不受约束。语义与边界见
    [根 design.md「高亮几何」](../../design.md)，共享实现在 `packages/web-shell`。
 
-消费方必须显式声明 `@garage/design-tokens`、`@garage/ui`（如需要 `@garage/web-shell`），并在 Tailwind v4
-的 source 配置中扫描 `@garage/ui/src` 与 `@garage/web-shell/src`，例如：
+消费方必须显式声明 `@gitnapp/design-tokens`、`@gitnapp/ui`（如需要 `@gitnapp/web-shell`），并在 Tailwind v4
+的 source 配置中扫描 `@gitnapp/ui/src` 与 `@gitnapp/web-shell/src`，例如：
 
 ```css
-@source "../../node_modules/@garage/ui/src";
-@source "../../node_modules/@garage/web-shell/src";
+@source "../../node_modules/@gitnapp/ui/src";
+@source "../../node_modules/@gitnapp/web-shell/src";
 ```
 
-组件从 `@garage/ui/components/ui/<name>` 按需导入，例如 `import { Button } from "@garage/ui/components/ui/button"`。
+组件从 `@gitnapp/ui/components/ui/<name>` 按需导入，例如 `import { Button } from "@gitnapp/ui/components/ui/button"`。

@@ -5,7 +5,7 @@ export const REQUIRED_WEB_SHELL_UTILITIES = Object.freeze([
   String.raw`.md\:block`,
   String.raw`.border-rail-foreground\/10`,
   String.raw`.hover\:bg-rail-foreground\/10`,
-  // Token-backed utility from @garage/design-tokens. If a consumer stops
+  // Token-backed utility from @gitnapp/design-tokens. If a consumer stops
   // importing the token package, this resolves to nothing and the shell's
   // floating layers silently lose their elevation instead of failing.
   ".shadow-overlay",
@@ -33,7 +33,7 @@ export async function assertBuiltWebShellCss(buildDirectory) {
   const missing = REQUIRED_WEB_SHELL_UTILITIES.filter((utility) => !css.includes(utility));
   if (missing.length > 0) {
     throw new Error(
-      `WEB_SHELL_CSS_GUARD: Tailwind did not scan @garage/web-shell; missing ${missing.join(", ")}`,
+      `WEB_SHELL_CSS_GUARD: Tailwind did not scan @gitnapp/web-shell; missing ${missing.join(", ")}`,
     );
   }
 

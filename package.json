@@ -1,13 +1,17 @@
 {
-  "name": "@garage/design-system",
+  "name": "rational-ui",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gitnapp/rational-ui"
+  },
   "packageManager": "pnpm@10.12.1",
   "engines": {
     "node": ">=24"
   },
   "scripts": {
-    "dev": "pnpm --filter @garage/gallery dev",
+    "dev": "pnpm --filter @gitnapp/gallery dev",
     "typecheck": "pnpm -r --if-present run typecheck",
     "test": "pnpm -r --if-present run test",
     "lint": "biome check .",

@@ -1,6 +1,6 @@
 "use client";
 
-// @garage-customized: formatIsoDate 固定 locale,修复 SSR/CSR hydration mismatch。
+// @gitnapp-customized: formatIsoDate 固定 locale,修复 SSR/CSR hydration mismatch。
 // 升级本组件禁止直接 `shadcn add -o` 覆盖——先 diff 再手动合入。CI 断言此标记存在(scripts/assert-customization-markers.mjs)。
 
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";

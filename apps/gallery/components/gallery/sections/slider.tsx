@@ -1,6 +1,6 @@
 "use client";
 
-import { Slider } from "@garage/ui/components/ui/slider";
+import { Slider } from "@gitnapp/ui/components/ui/slider";
 import { useState } from "react";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";

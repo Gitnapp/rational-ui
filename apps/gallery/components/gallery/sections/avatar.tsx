@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@garage/ui/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@gitnapp/ui/components/ui/avatar";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 

@@ -1,5 +1,5 @@
-import { Button } from "@garage/ui/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@garage/ui/components/ui/tooltip";
+import { Button } from "@gitnapp/ui/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@gitnapp/ui/components/ui/tooltip";
 
 import { ShowcaseSection } from "../showcase";
 

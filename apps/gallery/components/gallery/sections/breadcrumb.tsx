@@ -5,7 +5,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@garage/ui/components/ui/breadcrumb";
+} from "@gitnapp/ui/components/ui/breadcrumb";
 
 import { ShowcaseSection } from "../showcase";
 

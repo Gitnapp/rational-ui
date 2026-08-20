@@ -96,9 +96,9 @@ export default function GalleryPage() {
         <header className="space-y-2 border-b pb-6">
           <h1 className="text-2xl font-semibold text-foreground">组件展示台</h1>
           <p className="max-w-2xl text-sm text-muted-foreground">
-            @garage/ui 全部控件与变体的交互式预览。所有样式来自 @garage/design-tokens；
+            @gitnapp/ui 全部控件与变体的交互式预览。所有样式来自 @gitnapp/design-tokens；
             主题默认跟随系统 prefers-color-scheme，顶栏右侧有仅限本验收台的 light / dark / system
-            预览开关（铁律 #4 约束产品，不约束验收台）。左栏功能区与顶栏来自 @garage/web-shell，与
+            预览开关（铁律 #4 约束产品，不约束验收台）。左栏功能区与顶栏来自 @gitnapp/web-shell，与
             content-factory / navigator / userportal 同一套外壳。
           </p>
         </header>

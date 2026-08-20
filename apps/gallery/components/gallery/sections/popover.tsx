@@ -1,7 +1,7 @@
-import { Button } from "@garage/ui/components/ui/button";
-import { Input } from "@garage/ui/components/ui/input";
-import { Label } from "@garage/ui/components/ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "@garage/ui/components/ui/popover";
+import { Button } from "@gitnapp/ui/components/ui/button";
+import { Input } from "@gitnapp/ui/components/ui/input";
+import { Label } from "@gitnapp/ui/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@gitnapp/ui/components/ui/popover";
 
 import { ShowcaseSection } from "../showcase";
 

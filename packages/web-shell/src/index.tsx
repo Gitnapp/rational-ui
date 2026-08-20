@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@garage/ui/components/ui/dropdown-menu";
+} from "@gitnapp/ui/components/ui/dropdown-menu";
 // 跨 app 应用外壳：左栏功能区（bg-rail 主题轨）+ 顶栏功能 tab（同一面连续延伸）。
 // 语义真相源：根 design.md「应用外壳：左栏功能区 + 顶栏功能 tab」。三端
 // （content-factory / navigator / userportal）统一引用本包，不在 app 内另造外壳。

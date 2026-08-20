@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "@garage/ui/components/ui/button";
+import { Button } from "@gitnapp/ui/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@garage/ui/components/ui/collapsible";
+} from "@gitnapp/ui/components/ui/collapsible";
 import { ChevronsUpDownIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -29,10 +29,12 @@ export function CollapsibleSection() {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <div className="rounded-md border px-4 py-2 font-mono text-sm">@garage/ui</div>
+        <div className="rounded-md border px-4 py-2 font-mono text-sm">@gitnapp/ui</div>
         <CollapsibleContent className="space-y-2">
-          <div className="rounded-md border px-4 py-2 font-mono text-sm">@garage/design-tokens</div>
-          <div className="rounded-md border px-4 py-2 font-mono text-sm">@garage/gallery</div>
+          <div className="rounded-md border px-4 py-2 font-mono text-sm">
+            @gitnapp/design-tokens
+          </div>
+          <div className="rounded-md border px-4 py-2 font-mono text-sm">@gitnapp/gallery</div>
         </CollapsibleContent>
       </Collapsible>
     </ShowcaseSection>

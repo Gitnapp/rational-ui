@@ -28,7 +28,7 @@ test("rejects a build that omitted the shared responsive rail", async () => {
   await withFixture(".hidden{display:none}", async (directory) => {
     await assert.rejects(
       assertBuiltWebShellCss(directory),
-      /Tailwind did not scan @garage\/web-shell/u,
+      /Tailwind did not scan @gitnapp\/web-shell/u,
     );
   });
 });

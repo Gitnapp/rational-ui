@@ -1,9 +1,9 @@
 /*
- * Garage 共享设计 token —— monochrome（ChatGPT 式黑白）。
+ * rational-ui 共享设计 token —— monochrome（ChatGPT 式黑白）。
  * 语义真相源：根 design.md；本文件是它的跨 app CSS 面。
  * 消费方式：在各 app 的 globals.css 里
  *   @import "tailwindcss" source("../");
- *   @import "@garage/design-tokens";
+ *   @import "@gitnapp/design-tokens";
  * 仅含通用层（token + base + 系统偏好适配）；app 特有的 utility/布局留在各自 globals.css。
  * 字体依赖各 app 用 next/font 注册 Geist / Geist Mono（family 名即 "Geist"）。
  */

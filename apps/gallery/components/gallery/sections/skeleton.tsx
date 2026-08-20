@@ -1,4 +1,4 @@
-import { Skeleton } from "@garage/ui/components/ui/skeleton";
+import { Skeleton } from "@gitnapp/ui/components/ui/skeleton";
 
 import { ShowcaseSection, Stack } from "../showcase";
 

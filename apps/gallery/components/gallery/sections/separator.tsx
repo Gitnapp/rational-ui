@@ -1,4 +1,4 @@
-import { Separator } from "@garage/ui/components/ui/separator";
+import { Separator } from "@gitnapp/ui/components/ui/separator";
 
 import { ShowcaseSection, Stack } from "../showcase";
 
@@ -11,7 +11,7 @@ export function SeparatorSection() {
     >
       <Stack>
         <div className="w-64 space-y-1">
-          <h4 className="text-sm font-medium text-foreground">Garage UI</h4>
+          <h4 className="text-sm font-medium text-foreground">rational-ui</h4>
           <p className="text-sm text-muted-foreground">An open-source component library.</p>
         </div>
         <Separator />

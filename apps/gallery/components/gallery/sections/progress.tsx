@@ -1,4 +1,4 @@
-import { Progress } from "@garage/ui/components/ui/progress";
+import { Progress } from "@gitnapp/ui/components/ui/progress";
 
 import { ShowcaseSection, Variant, VariantRow } from "../showcase";
 

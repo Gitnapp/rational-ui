@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@garage/ui/components/ui/button";
+import { Button } from "@gitnapp/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -11,7 +11,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@garage/ui/components/ui/dropdown-menu";
+} from "@gitnapp/ui/components/ui/dropdown-menu";
 import { useState } from "react";
 
 import { ShowcaseSection } from "../showcase";
