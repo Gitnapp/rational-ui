@@ -9,6 +9,8 @@ import {
   RailNavLink,
   RailShell,
   RailSidebar,
+  type ShellLink,
+  ShellLinkProvider,
 } from "@gitnapp/web-shell";
 // The gallery is a Garage app like content-factory/navigator/userportal, so it
 // dogfoods the real shared shell (design.md「应用外壳」) instead of a bespoke
@@ -28,7 +30,12 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import NextLink from "next/link";
 import { type ReactNode, useEffect, useRef, useState } from "react";
+
+// web-shell 不绑定路由框架，默认渲染原生 <a>；gallery 是 Next app，注入
+// next/link 换回客户端路由与预取（design.md 之外的宿主接线，不属于组件契约）。
+const nextShellLink: ShellLink = (props) => <NextLink {...props} />;
 
 import { NAV_GROUPS, type NavGroupId } from "./nav-data";
 import { ThemePreviewToggle } from "./theme-preview-toggle";
@@ -154,69 +161,73 @@ export function GallerySidebarShell({ children }: { readonly children: ReactNode
     // left the rail's bg-rail background showing through as dead space at
     // the bottom. `fixed inset-0` pins directly to the viewport instead,
     // sidestepping that chain entirely.
-    <div className="fixed inset-0">
-      <RailShell
-        sidebar={
-          <RailSidebar
-            collapsed={collapsed}
-            brand={
-              <RailAppSwitcher
-                apps={APPS}
-                chevronIcon={<ChevronsUpDown className="size-3.5" />}
-                collapsed={collapsed}
-                currentAppId="design-system"
-              />
-            }
-            nav={<GroupNav collapsed={collapsed} activeGroupId={activeGroupId} />}
-          />
-        }
-        topbar={
-          <>
-            <RailCollapseButton
+    <ShellLinkProvider link={nextShellLink}>
+      <div className="fixed inset-0">
+        <RailShell
+          sidebar={
+            <RailSidebar
               collapsed={collapsed}
-              onToggle={() => setCollapsed((value) => !value)}
-              icon={<PanelLeft className="size-4" />}
+              brand={
+                <RailAppSwitcher
+                  apps={APPS}
+                  chevronIcon={<ChevronsUpDown className="size-3.5" />}
+                  collapsed={collapsed}
+                  currentAppId="design-system"
+                />
+              }
+              nav={<GroupNav collapsed={collapsed} activeGroupId={activeGroupId} />}
             />
-            <span className="text-sm text-rail-foreground/70">组件展示台 / {activeGroupTitle}</span>
-            <span className="ml-auto">
-              <ThemePreviewToggle />
-            </span>
-          </>
-        }
-      >
-        <RailMobileHeader
-          title="rational-ui"
-          currentLabel={activeGroupTitle}
-          onOpen={() => setMobileOpen(true)}
-          menuIcon={<Menu className="size-5" />}
-        />
-        <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
-          {children}
-        </div>
-        <RailMobileDrawer
-          open={mobileOpen}
-          onClose={() => setMobileOpen(false)}
-          closeIcon={<X className="size-4" />}
+          }
+          topbar={
+            <>
+              <RailCollapseButton
+                collapsed={collapsed}
+                onToggle={() => setCollapsed((value) => !value)}
+                icon={<PanelLeft className="size-4" />}
+              />
+              <span className="text-sm text-rail-foreground/70">
+                组件展示台 / {activeGroupTitle}
+              </span>
+              <span className="ml-auto">
+                <ThemePreviewToggle />
+              </span>
+            </>
+          }
         >
-          <div className="flex h-full flex-col">
-            <div className="flex h-12 shrink-0 items-center px-3">
-              <RailAppSwitcher
-                apps={APPS}
-                chevronIcon={<ChevronsUpDown className="size-3.5" />}
-                collapsed={false}
-                currentAppId="design-system"
-              />
-            </div>
-            <nav aria-label="功能区" className="flex-1 space-y-1 overflow-y-auto px-3 py-2">
-              <GroupNav
-                collapsed={false}
-                activeGroupId={activeGroupId}
-                onNavigate={() => setMobileOpen(false)}
-              />
-            </nav>
+          <RailMobileHeader
+            title="rational-ui"
+            currentLabel={activeGroupTitle}
+            onOpen={() => setMobileOpen(true)}
+            menuIcon={<Menu className="size-5" />}
+          />
+          <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
+            {children}
           </div>
-        </RailMobileDrawer>
-      </RailShell>
-    </div>
+          <RailMobileDrawer
+            open={mobileOpen}
+            onClose={() => setMobileOpen(false)}
+            closeIcon={<X className="size-4" />}
+          >
+            <div className="flex h-full flex-col">
+              <div className="flex h-12 shrink-0 items-center px-3">
+                <RailAppSwitcher
+                  apps={APPS}
+                  chevronIcon={<ChevronsUpDown className="size-3.5" />}
+                  collapsed={false}
+                  currentAppId="design-system"
+                />
+              </div>
+              <nav aria-label="功能区" className="flex-1 space-y-1 overflow-y-auto px-3 py-2">
+                <GroupNav
+                  collapsed={false}
+                  activeGroupId={activeGroupId}
+                  onNavigate={() => setMobileOpen(false)}
+                />
+              </nav>
+            </div>
+          </RailMobileDrawer>
+        </RailShell>
+      </div>
+    </ShellLinkProvider>
   );
 }
