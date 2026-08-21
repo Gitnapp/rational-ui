@@ -10,8 +10,14 @@ import {
 // 跨 app 应用外壳：左栏功能区（bg-rail 主题轨）+ 顶栏功能 tab（同一面连续延伸）。
 // 语义真相源：根 design.md「应用外壳：左栏功能区 + 顶栏功能 tab」。三端
 // （content-factory / navigator / userportal）统一引用本包，不在 app 内另造外壳。
-import Link from "next/link";
-import { type MouseEvent, type ReactNode, useEffect, useRef } from "react";
+import {
+  createContext,
+  type MouseEvent,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 
 import { buttonVariants } from "./button";
 
@@ -19,6 +25,32 @@ export { Button, buttonVariants } from "./button";
 
 export function cn(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(" ");
+}
+
+// 本包不绑定路由框架：Next Link / React Router / 原生 <a> 是宿主的事，本包只声明
+// 「链接长什么样」的契约。默认渲染原生 <a>（整页跳转，行为始终正确）；Next 消费方
+// 在自己的根布局包一层 ShellLinkProvider 注入 next/link 换回客户端路由。
+export interface ShellLinkProps {
+  readonly href: string;
+  readonly className?: string;
+  readonly title?: string;
+  readonly "aria-current"?: "page";
+  readonly onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+  readonly children?: ReactNode;
+}
+export type ShellLink = (props: ShellLinkProps) => ReactNode;
+
+const DefaultShellLink: ShellLink = (props) => <a {...props} />;
+const ShellLinkContext = createContext<ShellLink>(DefaultShellLink);
+
+export function ShellLinkProvider({
+  link,
+  children,
+}: {
+  readonly link: ShellLink;
+  readonly children: ReactNode;
+}) {
+  return <ShellLinkContext.Provider value={link}>{children}</ShellLinkContext.Provider>;
 }
 
 const RAIL_EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
@@ -253,6 +285,7 @@ export function RailAppSwitcher({
   readonly chevronIcon: ReactNode;
   readonly label?: string;
 }) {
+  const Link = useContext(ShellLinkContext);
   const current = apps.find((app) => app.id === currentAppId) ?? apps[0];
   if (!current) return null;
 
@@ -327,6 +360,7 @@ export function RailNavLink({
   readonly collapsed: boolean;
   readonly onClick?: () => void;
 }) {
+  const Link = useContext(ShellLinkContext);
   return (
     <Link
       href={href}
@@ -370,6 +404,7 @@ export type RailTab = {
 
 // 顶栏功能 tab：主题面 pill，选中/hover 都从 rail foreground 派生。
 export function RailTabs({ tabs }: { readonly tabs: readonly RailTab[] }) {
+  const Link = useContext(ShellLinkContext);
   return (
     <nav aria-label="当前功能区标签" className="flex items-center gap-1">
       {tabs.map((tab) =>
@@ -459,6 +494,7 @@ export function RailUserBlock({
   readonly logoutMethod?: "get" | "post";
   readonly logoutLabel?: string;
 }) {
+  const Link = useContext(ShellLinkContext);
   const avatarLabel = Array.from(name.trim())[0]?.toUpperCase() || "U";
   const identity = (
     <>
@@ -573,6 +609,7 @@ export function RailMobileHeader({
 // 移动端子页 tab 行：位于白色主区顶栏内，因此配色取 card 面而非主题轨。
 // 横向可滚动以容纳较多 tab；命中区按 design.md「无障碍」在 coarse pointer 下 ≥44px。
 function RailMobileTabs({ tabs }: { readonly tabs: readonly RailTab[] }) {
+  const Link = useContext(ShellLinkContext);
   return (
     <nav
       aria-label="当前功能区标签"
