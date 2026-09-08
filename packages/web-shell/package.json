@@ -1,7 +1,7 @@
 {
   "name": "@gitnapp/web-shell",
-  "version": "0.2.0",
-  "description": "跨产品应用外壳（主题 rail + 顶栏功能 tab），语义真相源：根 design.md「应用外壳」",
+  "version": "0.3.0",
+  "description": "\u8de8\u4ea7\u54c1\u5e94\u7528\u5916\u58f3\uff08\u4e3b\u9898 rail + \u9876\u680f\u529f\u80fd tab\uff09\uff0c\u8bed\u4e49\u771f\u76f8\u6e90\uff1a\u6839 design.md\u300c\u5e94\u7528\u5916\u58f3\u300d",
   "repository": {
     "type": "git",
     "url": "https://github.com/Gitnapp/rational-ui",
