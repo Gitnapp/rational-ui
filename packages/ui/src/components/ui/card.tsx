@@ -1,3 +1,6 @@
+// @gitnapp-customized: design.md「圆角与层级」阴影收敛——移除默认阴影，bg-card + border 已是色调面+细边。
+// 升级本组件禁止直接 `shadcn add -o` 覆盖——先 diff 再手动合入。CI 断言此标记存在(scripts/assert-customization-markers.mjs)。
+
 import type * as React from "react";
 
 import { cn } from "../../lib/utils";
@@ -7,7 +10,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",
+        "flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground",
         className,
       )}
       {...props}
