@@ -1,3 +1,4 @@
+@import "@gitnapp/ui/patterns.css";
 @import "tailwindcss" source("../");
 @import "@gitnapp/design-tokens";
 

@@ -5,3 +5,7 @@ coverage/
 .DS_Store
 .next/
 next-env.d.ts
+
+# Generated from the root design contract during packaging
+/packages/ui/design.md
+/packages/web-shell/design.md
