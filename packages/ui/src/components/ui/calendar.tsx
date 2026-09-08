@@ -189,4 +189,5 @@ function CalendarDayButton({
   );
 }
 
+export { zhCN } from "react-day-picker/locale";
 export { Calendar, CalendarDayButton };
