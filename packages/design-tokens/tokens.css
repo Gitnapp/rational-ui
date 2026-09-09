@@ -186,13 +186,15 @@ textarea {
    `hover: none`) also matches mouse-driven touchscreen Windows desktops and
    would inflate every button there (design.md: 桌面密度不变). */
 @media (max-width: 47.999rem), ((hover: none) and (pointer: coarse)) {
-  button {
-    min-height: 2.75rem;
-    min-width: 2.75rem;
+  [data-slot="button"] {
+    min-height: 2.25rem;
+    font-size: 0.875rem;
   }
 
   [data-slot="button"][data-size^="icon"] {
-    min-width: 2.75rem;
+    min-width: 2.25rem;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 
   /* iOS Safari 在聚焦 font-size < 16px 的表单控件时会自动放大视口（模态框 zoom-in）。
@@ -286,5 +288,64 @@ textarea {
   [data-slot="dropdown-menu-content"],
   [data-slot="select-content"] {
     border-color: var(--foreground);
+  }
+}
+
+/* Touch controls own their target area; no overlapping pseudo-element hit slop. */
+
+@layer base {
+  button,
+  a,
+  select,
+  [role="button"],
+  [role="menuitem"],
+  [role="option"] {
+    cursor: default;
+  }
+}
+
+/* Shared compact fields, task typography and non-overlapping keyboard focus. */
+:root {
+  --control-height: 33px;
+  --control-font-size: 12px;
+  --control-line-height: 18px;
+  --control-padding-inline: 12px;
+  --control-padding-block: 6px;
+  --control-touch-size: 44px;
+  --focus-ring-width: 1px;
+  --focus-ring-offset: -2px;
+  --task-padding: 10px;
+  --task-font-size: 12px;
+  --task-meta-size: 11px;
+  --task-gap: 10px;
+}
+@media (hover: none) and (pointer: coarse) {
+  :root {
+    --control-height: var(--control-touch-size);
+  }
+}
+
+@media (max-width: 47.999rem), ((hover: none) and (pointer: coarse)) {
+  :root {
+    --control-font-size: 16px;
+    --control-line-height: 22px;
+    --control-height: 44px;
+  }
+}
+
+:root {
+  --page-title-gap: 24px;
+  --page-title-size: 24px;
+  --page-title-line-height: 32px;
+  --page-padding-block: 32px;
+  --page-padding-inline: 36px;
+  --section-gap: 20px;
+  --toolbar-gap: 16px;
+  --calendar-past-background: color-mix(in oklab, var(--muted) 65%, var(--background));
+}
+@media (max-width: 767px) {
+  :root {
+    --page-padding-block: 24px;
+    --page-padding-inline: 18px;
   }
 }
