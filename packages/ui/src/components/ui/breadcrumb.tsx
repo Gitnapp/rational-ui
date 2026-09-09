@@ -62,6 +62,10 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
   );
 }
 
+function BreadcrumbChevron() {
+  return <ChevronRight aria-hidden="true" className="size-3.5 shrink-0" />;
+}
+
 function BreadcrumbSeparator({ children, className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
@@ -71,7 +75,7 @@ function BreadcrumbSeparator({ children, className, ...props }: React.ComponentP
       className={cn("[&>svg]:size-3.5", className)}
       {...props}
     >
-      {children ?? <ChevronRight />}
+      {children ?? <BreadcrumbChevron />}
     </li>
   );
 }
@@ -93,6 +97,7 @@ function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<"span"
 
 export {
   Breadcrumb,
+  BreadcrumbChevron,
   BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
