@@ -1,8 +1,6 @@
 import type { ComponentType } from "react";
-
 import { GallerySidebarShell } from "../components/gallery/app-shell";
 import { NAV_GROUPS, type NavItemId } from "../components/gallery/nav-data";
-
 import { AccordionSection } from "../components/gallery/sections/accordion";
 import { AlertSection } from "../components/gallery/sections/alert";
 import { AlertDialogSection } from "../components/gallery/sections/alert-dialog";
@@ -24,6 +22,7 @@ import { HoverCardSection } from "../components/gallery/sections/hover-card";
 import { InputSection } from "../components/gallery/sections/input";
 import { InputOtpSection } from "../components/gallery/sections/input-otp";
 import { LabelSection } from "../components/gallery/sections/label";
+import { LoadingPatternsSection } from "../components/gallery/sections/loading-patterns";
 import { MenubarSection } from "../components/gallery/sections/menubar";
 import { NavigationMenuSection } from "../components/gallery/sections/navigation-menu";
 import { PaginationSection } from "../components/gallery/sections/pagination";
@@ -79,6 +78,7 @@ const SECTIONS: Record<NavItemId, ComponentType> = {
   avatar: AvatarSection,
   table: TableSection,
   progress: ProgressSection,
+  "loading-patterns": LoadingPatternsSection,
   skeleton: SkeletonSection,
   separator: SeparatorSection,
   "scroll-area": ScrollAreaSection,

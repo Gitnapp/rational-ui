@@ -57,6 +57,7 @@ export const NAV_GROUPS = [
       { id: "avatar", label: "Avatar" },
       { id: "table", label: "Table" },
       { id: "progress", label: "Progress" },
+      { id: "loading-patterns", label: "Loading & patterns" },
       { id: "skeleton", label: "Skeleton" },
       { id: "separator", label: "Separator" },
       { id: "scroll-area", label: "Scroll Area" },
